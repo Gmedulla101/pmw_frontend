@@ -10,8 +10,8 @@ const Home = () => {
   return (
     <>
       <Header />
-      <main className="mx-3">
-        <section className="flex flex-row mt-5 sm:gap-5 justify-center">
+      <main className="mx-3 lg:mx-10">
+        <section className="flex flex-row mt-5 sm:gap-5 justify-center lg:justify-around">
           <TxnInfoBox />
           <MoneyFlowBox />
         </section>
@@ -30,7 +30,7 @@ const Home = () => {
         </section>
 
         {/* TRANSACTIONS TABLE */}
-        <section className="mt-10">
+        <section className="mt-16 mx-3 lg:mx-8">
           <TxnTable />
         </section>
       </main>
