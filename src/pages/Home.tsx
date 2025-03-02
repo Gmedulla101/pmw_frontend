@@ -1,14 +1,39 @@
 import Header from '../components/Header';
-import Footer from '../components/Footer';
+import TxnInfoBox from '../components/Home/TxnInfoBox';
+import MoneyFlowBox from '../components/Home/MoneyFlowBox';
+import create from '../assets/plus.png';
+import join from '../assets/partnership.png';
+
+import TxnTable from '../components/Home/TxnTable';
 
 const Home = () => {
   return (
     <>
       <Header />
-      <main>
-        <h1> Content </h1>
+      <main className="mx-3">
+        <section className="flex flex-row mt-5 sm:gap-5 justify-center">
+          <TxnInfoBox />
+          <MoneyFlowBox />
+        </section>
+
+        {/* ACTION BUTTON */}
+        <section className="mt-5 flex flex-row sm:gap-5 justify-around">
+          <button className="flex flex-row justify-center items-center w-[45%] rounded-lg py-1 px-2 gap-2 text-white bg-gray-800 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%]">
+            <img src={create} alt="" className="w-8" />
+            <span>Create a transaction</span>
+          </button>
+
+          <button className="flex flex-row justify-center items-center w-[45%] rounded-lg py-1 px-2 gap-2 text-white bg-gray-500 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%]">
+            <img src={join} alt="" className="w-12" />
+            <span>Join a transaction</span>
+          </button>
+        </section>
+
+        {/* TRANSACTIONS TABLE */}
+        <section className="mt-10">
+          <TxnTable />
+        </section>
       </main>
-      <Footer />
     </>
   );
 };

@@ -1,1 +1,15 @@
+/* FONTS */
+@import url('https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Merienda:wght@300..900&display=swap');
+
+/* TAILWIND IMPORT */
 @import 'tailwindcss';
+
+@theme {
+  --font-nunito: 'Nunito', sans-serif;
+  --font-merienda: 'Merienda', sans-serif;
+}
+
+body {
+  font-family: 'Nunito';
+}
