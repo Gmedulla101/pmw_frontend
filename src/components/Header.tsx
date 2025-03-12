@@ -6,14 +6,14 @@ import { AppDispatch } from '../redux/store';
 const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   return (
-    <header className="py-3 px-2 rounded-sm shadow-sm flex justify-between items-center">
+    <header className="py-3 px-6 rounded-sm shadow-sm flex justify-between items-center">
       <h1 className="font-merienda font-bold text-2xl">PayWay</h1>
 
       <div
         onClick={() => {
           dispatch(setIsOpen());
         }}
-        className="w-8 cursor-pointer"
+        className="w-9 cursor-pointer hover:bg-gray-200 p-1 rounded-lg"
       >
         <img className="w-full" src={menu} alt="" />
       </div>

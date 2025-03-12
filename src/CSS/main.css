@@ -13,3 +13,15 @@
 body {
   font-family: 'Nunito';
 }
+
+#main::before {
+  content: '';
+  display: block;
+  background-color: black;
+  opacity: 0.4;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

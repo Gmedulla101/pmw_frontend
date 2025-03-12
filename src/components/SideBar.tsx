@@ -1,17 +1,47 @@
-import { useSelector } from "react-redux";
-import { RootState } from "../redux/store";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
+import { setIsOpen } from '../redux/features/sidebarSlice';
+import close from '../assets/close.png';
 
 const SideBar = () => {
-  const {isOpen} = useSelector((store: RootState) => {return store.sidebar})
- 
+  const { isOpen } = useSelector((store: RootState) => {
+    return store.sidebar;
+  });
+
+  const dispatch = useDispatch<AppDispatch>();
 
   return (
-    <div
-      className="bg-white h-[100vw] fixed right-0"
-      style={{ maxWidth: '300px', width: isOpen ? '300px' : '0px' }}
+    <aside id='sidebar'
+      className="bg-white h-[100vh] fixed right-0 py-2 px-4 transition-all duration-500 rounded-l-2xl"
+      style={{
+        maxWidth: '300px',
+        width: isOpen ? '300px' : '0',
+        opacity: isOpen ? '1' : '0',
+      }}
     >
-      SideBar
-    </div>
+      <div className="flex justify-between items-center">
+        <span className="block w-12 h-12 border border-gray-400 rounded-full"></span>
+        <div
+          onClick={() => {
+            dispatch(setIsOpen());
+          }}
+          className="w-8 hover:bg-gray-200 rounded-lg cursor-pointer"
+        >
+          <img src={close} className="w-full" />
+        </div>
+      </div>
+
+      {/* MAIN SIDEBAR CONTENT */}
+      <div className='mt-10'>
+        <ul className='flex flex-col gap-4 text-[14px] font-semibold'>
+          <li> Profile </li>
+          <li> Transactions </li>
+          <li> Messages </li>
+          <li> Request history </li>
+          <li> Support </li>
+        </ul>
+      </div>
+    </aside>
   );
 };
 
