@@ -1,7 +1,15 @@
-import Home from './pages/Home';
+import { Outlet } from 'react-router';
+import SideBar from './components/SideBar';
 
 const App = () => {
-  return <Home />;
+ return (
+   <main className="flex">
+     <section className='w-full'>
+       <Outlet />
+     </section>
+     <SideBar />
+   </main>
+ );
 };
 
 export default App;

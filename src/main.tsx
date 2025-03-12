@@ -6,8 +6,14 @@ import './CSS/main.css';
 import { RouterProvider } from 'react-router';
 import router from './routes/router.tsx';
 
+//REDUX TOOLKIT THNIGS
+import store from './redux/store.tsx';
+import { Provider } from 'react-redux';
+
 createRoot(document.getElementById('root')!).render(
-  <StrictMode>
-    <RouterProvider router={router} />
-  </StrictMode>
+  <Provider store={store}>
+    <StrictMode>
+      <RouterProvider router={router} />
+    </StrictMode>
+  </Provider>
 );

@@ -11,7 +11,7 @@ const Home = () => {
     <>
       <Header />
       <main className="mx-3 lg:mx-10">
-        <section className="flex flex-row mt-5 sm:gap-5 justify-center lg:justify-around">
+        <section className="flex flex-row mt-5 gap-2 sm:gap-5 justify-center lg:justify-around">
           <TxnInfoBox />
           <MoneyFlowBox />
         </section>
