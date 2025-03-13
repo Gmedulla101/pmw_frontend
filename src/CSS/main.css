@@ -25,3 +25,45 @@ body {
   width: 100%;
   height: 100%;
 }
+
+#signup,
+#signin {
+  position: relative;
+}
+
+#signup::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  width: 0;
+  height: 100%;
+  background-color: white;
+  opacity: 0.5;
+}
+
+#signin:hover::after {
+  width: 100%;
+  transition: all;
+  transition-duration: 0.3s;
+}
+#signin::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  max-width: 100%;
+  width: 0;
+  height: 100%;
+  background-color: white;
+  opacity: 0.5;
+}
+
+#signup:hover::after {
+  width: 100%;
+  transition: all;
+  transition-duration: 0.3s;
+}
