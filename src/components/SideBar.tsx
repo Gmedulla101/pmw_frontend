@@ -2,6 +2,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { setIsOpen } from '../redux/features/sidebarSlice';
 import close from '../assets/close.png';
+import avatar from '../assets/user.png'
+
+//USING DATA FROM THE USER CONTEXT
+import { useGlobalUserContext } from '../context/UserContext';
 
 const SideBar = () => {
   const { isOpen } = useSelector((store: RootState) => {
@@ -10,8 +14,12 @@ const SideBar = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
+  const {isSignedIn} = useGlobalUserContext();
+ 
+
   return (
-    <aside id='sidebar'
+    <aside
+      id="sidebar"
       className="bg-white h-[100vh] fixed right-0 py-2 px-4 transition-all duration-500 rounded-l-2xl"
       style={{
         maxWidth: '300px',
@@ -20,7 +28,9 @@ const SideBar = () => {
       }}
     >
       <div className="flex justify-between items-center">
-        <span className="block w-12 h-12 border border-gray-400 rounded-full"></span>
+        <span className="block w-12 h-12 border-3 border-gray-400 rounded-full overflow-hidden">
+          <img className='mt-1' src={avatar} />
+        </span>
         <div
           onClick={() => {
             dispatch(setIsOpen());
@@ -32,14 +42,22 @@ const SideBar = () => {
       </div>
 
       {/* MAIN SIDEBAR CONTENT */}
-      <div className='mt-10'>
-        <ul className='flex flex-col gap-4 text-[14px] font-semibold'>
-          <li> Profile </li>
-          <li> Transactions </li>
-          <li> Messages </li>
-          <li> Request history </li>
-          <li> Support </li>
-        </ul>
+      <div className="mt-10">
+        {isSignedIn ? (
+          <ul className="flex flex-col gap-4 text-[14px] font-semibold">
+            <li> Profile </li>
+            <li> Transactions </li>
+            <li> Messages </li>
+            <li> Request history </li>
+            <li> Support </li>
+          </ul>
+        ) : (
+          <ul className="flex flex-col gap-4 text-[14px] font-semibold">
+            <li> Sign up </li>
+            <li> Sign in </li>
+            <li> Support </li>
+          </ul>
+        )}
       </div>
     </aside>
   );

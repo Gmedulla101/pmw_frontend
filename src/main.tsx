@@ -10,10 +10,15 @@ import router from './routes/router.tsx';
 import store from './redux/store.tsx';
 import { Provider } from 'react-redux';
 
+//APP CONTEXT
+import UserContext from './context/UserContext.tsx';
+
 createRoot(document.getElementById('root')!).render(
-  <Provider store={store}>
-    <StrictMode>
-      <RouterProvider router={router} />
-    </StrictMode>
-  </Provider>
+  <UserContext>
+    <Provider store={store}>
+      <StrictMode>
+        <RouterProvider router={router} />
+      </StrictMode>
+    </Provider>
+  </UserContext>
 );
