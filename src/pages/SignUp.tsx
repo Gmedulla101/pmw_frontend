@@ -1,31 +1,31 @@
-
 //REDUX TOLLKIT THINGS
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store";
-import { handleForm } from "../redux/features/authSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
+import { handleForm } from '../redux/features/authSlice';
 
 const SignUp = () => {
-  const {form} = useSelector((store: RootState) => store.auth);
+  const { form } = useSelector((store: RootState) => store.auth);
   const dispatch = useDispatch<AppDispatch>();
 
   console.log(form);
 
   const handleFormChange = (e: any) => {
-      dispatch(handleForm({
+    dispatch(
+      handleForm({
         name: e.target.name,
-        value: e.target.value
-      }))
-  }
+        value: e.target.value,
+      })
+    );
+  };
 
   return (
     <main className="px-5 md:px-10">
       <h1 className="mt-12 text-center">
-        {' '}
-        Enter your details to create a new <strong>PayWay</strong> account{' '}
+        Create a new <strong>PayWay</strong> account to enjoy worry free
+        purchases and sales.
       </h1>
       <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl px-5 md:px-10">
         <input
-
           type="text"
           className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="firstName"
