@@ -1,5 +1,94 @@
+
+//REDUX TOLLKIT THINGS
+import { useSelector, useDispatch } from "react-redux";
+import { RootState, AppDispatch } from "../redux/store";
+import { handleForm } from "../redux/features/authSlice";
+
 const SignUp = () => {
-  return <div>SIgnUp</div>;
+  const {form} = useSelector((store: RootState) => store.auth);
+  const dispatch = useDispatch<AppDispatch>();
+
+  console.log(form);
+
+  const handleFormChange = (e: any) => {
+      dispatch(handleForm({
+        name: e.target.name,
+        value: e.target.value
+      }))
+  }
+
+  return (
+    <main className="px-5 md:px-10">
+      <h1 className="mt-12 text-center">
+        {' '}
+        Enter your details to create a new <strong>PayWay</strong> account{' '}
+      </h1>
+      <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl px-5 md:px-10">
+        <input
+
+          type="text"
+          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
+          name="firstName"
+          placeholder="Enter your first name"
+          value={form.firstName}
+          onChange={handleFormChange}
+        />
+
+        <input
+          type="text"
+          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
+          name="lastName"
+          placeholder="Enter your last name"
+          value={form.lastName}
+          onChange={handleFormChange}
+        />
+
+        <input
+          type="text"
+          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
+          name="username"
+          placeholder="Enter your username"
+          value={form.username}
+          onChange={handleFormChange}
+        />
+
+        <input
+          type="email"
+          required={true}
+          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
+          name="email"
+          placeholder="Enter your email"
+          value={form.email}
+          onChange={handleFormChange}
+        />
+
+        <input
+          type="password"
+          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
+          name="password"
+          placeholder="Enter your password"
+          value={form.password}
+          onChange={handleFormChange}
+        />
+
+        <input
+          type="password"
+          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
+          name="confirmPassword"
+          placeholder="Re-enter your password"
+          value={form.confirmPassword}
+          onChange={handleFormChange}
+        />
+
+        <button
+          id="signup"
+          className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-10"
+        >
+          <p>Sign up</p>
+        </button>
+      </section>
+    </main>
+  );
 };
 
 export default SignUp;

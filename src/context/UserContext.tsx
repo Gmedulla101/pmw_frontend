@@ -25,7 +25,7 @@ export const useGlobalUserContext = () => {
 const storedToken = localStorage.getItem('pmw_token');
 const storedUser = localStorage.getItem("pmw_user");
 if (!storedToken) {
-  console.error("No user is logged in");
+  console.warn("No user is logged in");
 }
 
 let userToken: string | undefined;
@@ -41,7 +41,7 @@ if(storedToken && storedUser) {
     user = undefined
   }
 } else {
-  console.error("No user is logged in");
+  console.warn("No user is logged in");
   userToken = undefined;
   user = undefined
 }
