@@ -3,11 +3,15 @@ import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { handleForm } from '../redux/features/authSlice';
 
+//IMPORKING AUTH HOOK
+import useAuth from '../hooks/useAuth';
+
+//GETTING TOASTY
+import { ToastContainer } from 'react-toastify';
+
 const SignUp = () => {
   const { form } = useSelector((store: RootState) => store.auth);
   const dispatch = useDispatch<AppDispatch>();
-
-  console.log(form);
 
   const handleFormChange = (e: any) => {
     dispatch(
@@ -18,12 +22,19 @@ const SignUp = () => {
     );
   };
 
+  const { handleRegister } = useAuth();
+
   return (
     <main className="px-5 md:px-10">
       <h1 className="mt-12 text-center">
         Create a new <strong>PayWay</strong> account to enjoy worry free
         purchases and sales.
       </h1>
+
+      <div>
+        <ToastContainer autoClose={2000} />
+      </div>
+
       <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl px-5 md:px-10">
         <input
           type="text"
@@ -80,7 +91,12 @@ const SignUp = () => {
           onChange={handleFormChange}
         />
 
+        <p className="text-xs text-red-600">
+          Please note that passwords are case sentitive
+        </p>
+
         <button
+          onClick={handleRegister}
           id="signup"
           className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-10"
         >

@@ -22,8 +22,8 @@ export const useGlobalUserContext = () => {
 
 
 //NEEDED CONTEXT VALUES
-const storedToken = localStorage.getItem('pmw_token');
-const storedUser = localStorage.getItem("pmw_user");
+const storedToken = localStorage.getItem('pw_token');
+const storedUser = localStorage.getItem("pw_user");
 if (!storedToken) {
   console.warn("No user is logged in");
 }
