@@ -51,7 +51,12 @@ const useAuth = () => {
       localStorage.setItem('pw_user', JSON.stringify(data.user));
       setUserData(data.user);
       setIsSignedIn(true);
-      navigate('/');
+
+      toast.success('User has been registered!');
+
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error: any) {
       if (error.response.data.msg) {
         toast.error(error?.response?.data?.msg);
@@ -63,13 +68,24 @@ const useAuth = () => {
 
   const handleLogin = async () => {
     try {
-      const response = await axios.post(`${API}/auth/login`, {
+      const response = await axios.post(`${API}/auth/user-login`, {
         email,
         password,
       });
-      console.log(response);
+
+      const data = response.data;
+      localStorage.setItem('pw_token', JSON.stringify(data.token));
+      localStorage.setItem('pw_user', JSON.stringify(data.user));
+      setUserData(data.user);
+      setIsSignedIn(true);
+
+      toast.success('User logged in!');
+
+       setTimeout(() => {
+        navigate('/');
+      }, 3000);
     } catch (error: any) {
-      if (error.response.data.msg) {
+      if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
         toast.error(error.message);

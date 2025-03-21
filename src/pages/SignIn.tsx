@@ -1,17 +1,23 @@
-import { useSelector, useDispatch } from "react-redux";
-import { RootState, AppDispatch } from "../redux/store";
-import { handleForm } from "../redux/features/authSlice";
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
+import { handleForm } from '../redux/features/authSlice';
+import useAuth from '../hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
 
 const SignIn = () => {
-const {form} = useSelector((store: RootState) => store.auth);
-const dispatch = useDispatch<AppDispatch>();
+  const { form } = useSelector((store: RootState) => store.auth);
+  const dispatch = useDispatch<AppDispatch>();
 
-const handleFormChange = (e: any) => {
-  dispatch(handleForm({
-    name: e.target.name,
-    value: e.target.value
-  }))
-}
+  const handleFormChange = (e: any) => {
+    dispatch(
+      handleForm({
+        name: e.target.name,
+        value: e.target.value,
+      })
+    );
+  };
+
+  const { handleLogin } = useAuth();
 
   return (
     <main>
@@ -19,10 +25,12 @@ const handleFormChange = (e: any) => {
         {' '}
         Sign in to your <strong>PayWay</strong> account{' '}
       </h1>
+
+      <div>
+        <ToastContainer autoClose={2000} />
+      </div>
+
       <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl px-5 md:px-10">
-        
-
-
         <input
           type="email"
           required={true}
@@ -43,6 +51,7 @@ const handleFormChange = (e: any) => {
         />
 
         <button
+          onClick={handleLogin}
           id="signup"
           className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-8"
         >
