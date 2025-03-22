@@ -1,3 +1,4 @@
+//IMPORTING HELPER COMPONENTS AND ASSETS
 import TxnInfoBox from './TxnInfoBox';
 import MoneyFlowBox from './MoneyFlowBox';
 import create from '../../assets/plus.png';
