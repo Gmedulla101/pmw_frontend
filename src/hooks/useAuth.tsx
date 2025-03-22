@@ -94,7 +94,15 @@ const useAuth = () => {
   };
 
   const logOut = () => {
-    console.log('logged out');
+     localStorage.removeItem('pw_token')
+     localStorage.removeItem('pw_user');
+     setUserData({});
+     setIsSignedIn(false);
+
+     toast.success('Successfully signed out ');
+      setTimeout(() => {
+        navigate('/');
+      }, 3000);
   };
 
   return {

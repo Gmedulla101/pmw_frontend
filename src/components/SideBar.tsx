@@ -1,8 +1,11 @@
+//REACT ROUTER THINGS
+import { Link } from 'react-router';
+
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { setIsOpen } from '../redux/features/sidebarSlice';
 import close from '../assets/close.png';
-import avatar from '../assets/user.png'
+import avatar from '../assets/user.png';
 
 //USING DATA FROM THE USER CONTEXT
 import { useGlobalUserContext } from '../context/UserContext';
@@ -14,8 +17,7 @@ const SideBar = () => {
 
   const dispatch = useDispatch<AppDispatch>();
 
-  const {isSignedIn} = useGlobalUserContext();
- 
+  const { isSignedIn } = useGlobalUserContext();
 
   return (
     <aside
@@ -29,7 +31,7 @@ const SideBar = () => {
     >
       <div className="flex justify-between items-center">
         <span className="block w-12 h-12 border-3 border-gray-400 rounded-full overflow-hidden">
-          <img className='mt-1' src={avatar} />
+          <img className="mt-1" src={avatar} />
         </span>
         <div
           onClick={() => {
@@ -45,7 +47,9 @@ const SideBar = () => {
       <div className="mt-10">
         {isSignedIn ? (
           <ul className="flex flex-col gap-4 text-[14px] font-semibold">
-            <li> Profile </li>
+            <Link to={'/user-profile'}>
+              <li> Profile </li>
+            </Link>
             <li> Transactions </li>
             <li> Messages </li>
             <li> Request history </li>
