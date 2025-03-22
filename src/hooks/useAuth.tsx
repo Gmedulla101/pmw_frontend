@@ -46,7 +46,7 @@ const useAuth = () => {
         confirmPassword,
       });
 
-      const data = response.data.data;
+      const data = response.data;
       localStorage.setItem('pw_token', JSON.stringify(data.token));
       localStorage.setItem('pw_user', JSON.stringify(data.user));
       setUserData(data.user);
@@ -81,7 +81,7 @@ const useAuth = () => {
 
       toast.success('User logged in!');
 
-       setTimeout(() => {
+      setTimeout(() => {
         navigate('/');
       }, 3000);
     } catch (error: any) {
@@ -93,9 +93,14 @@ const useAuth = () => {
     }
   };
 
+  const logOut = () => {
+    console.log('logged out');
+  };
+
   return {
     handleLogin,
     handleRegister,
+    logOut,
   };
 };
 
