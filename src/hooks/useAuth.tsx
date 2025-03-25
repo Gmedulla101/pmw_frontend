@@ -5,7 +5,7 @@ import { RootState } from '../redux/store';
 import { useGlobalUserContext } from '../context/UserContext';
 import { toast } from 'react-toastify';
 
-const API = import.meta.env.VITE_BASE_API_URL;
+export const API = import.meta.env.VITE_BASE_API_URL;
 
 const useAuth = () => {
   const { form } = useSelector((store: RootState) => store.auth);

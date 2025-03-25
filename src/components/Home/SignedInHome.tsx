@@ -49,8 +49,16 @@ const SignedInHome = () => {
         </section>
 
         {/* TRANSACTIONS TABLE */}
-        <section className="mt-16 mx-3 lg:mx-8">
-      
+        <section className="mt-10 mx-3 lg:mx-8">
+          {tableData.length < 1 ? (
+            ''
+          ) : (
+            <div>
+              <p className="text-xs text-gray-500 mb-1">
+                Scroll to see more details about your transactions
+              </p>
+            </div>
+          )}
           <TxnTable tableData={tableData} />
         </section>
       </main>

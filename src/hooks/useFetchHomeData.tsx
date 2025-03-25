@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { useGlobalUserContext } from '../context/UserContext';
+import { API } from './useAuth';
 
 export type TableData = {
   seller: any;
@@ -9,8 +10,6 @@ export type TableData = {
   txnItemValue: number;
   status: string;
 };
-
-const API = import.meta.env.VITE_BASE_API_URL;
 
 const useFetchHomeData = () => {
   const { userToken } = useGlobalUserContext();

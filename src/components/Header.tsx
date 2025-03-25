@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 import menu from '../assets/menu.png';
 import { setIsOpen } from '../redux/features/sidebarSlice';
 import { useDispatch } from 'react-redux';
@@ -7,7 +9,9 @@ const Header = () => {
   const dispatch = useDispatch<AppDispatch>();
   return (
     <header className="py-3 px-6 rounded-sm shadow-sm flex justify-between items-center">
-      <h1 className="font-merienda font-bold text-2xl">PayWay</h1>
+      <Link to={'/'}>
+        <h1 className="font-nunito font-bold text-2xl">PayWay</h1>
+      </Link>
 
       <div
         onClick={() => {

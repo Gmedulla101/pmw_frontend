@@ -57,8 +57,12 @@ const SideBar = () => {
           </ul>
         ) : (
           <ul className="flex flex-col gap-4 text-[14px] font-semibold">
-            <li> Sign up </li>
-            <li> Sign in </li>
+            <Link to={'/sign-up'}>
+              <li> Sign up </li>
+            </Link>
+            <Link to={'/sign-in'}>
+              <li> Sign in </li>
+            </Link>
             <li> Support </li>
           </ul>
         )}

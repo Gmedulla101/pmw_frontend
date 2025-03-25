@@ -1,15 +1,19 @@
+//IMPORTING HOOKS
+import { useGlobalUserContext } from '../../context/UserContext';
 import useFetchHomeData from '../../hooks/useFetchHomeData';
-import LoaderComponent from '../LoaderComponent';
 import { TableData } from '../../hooks/useFetchHomeData';
+
+//IMPORTING HELPER COMPONENTS
+import LoaderComponent from '../LoaderComponent';
 
 const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
   const { isLoading } = useFetchHomeData();
+  const { userData } = useGlobalUserContext();
 
   return (
     <>
       {tableData.length < 1 ? (
         <h1 className="text-center font-semibold text-xl md:text-2xl">
-          {' '}
           You haven't created any transactions{' '}
         </h1>
       ) : (
@@ -18,12 +22,6 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
             <LoaderComponent />
           ) : (
             <>
-              <div>
-                {' '}
-                <p className="text-xs text-gray-500 mb-1">
-                  Scroll to see more details about your transactions
-                </p>
-              </div>
               <table className="w-[700px]">
                 <thead className="block w-full bg-black py-3 px-3 text-white font-bold">
                   <tr className="text-[14px] flex flex-row justify-between w-full ">
@@ -45,11 +43,21 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                           {data?.seller?.firstName
                             ? data.seller.firstName
                             : 'TBI'}
+                          <span className="font-bold">
+                            {data?.seller?.firstName === userData.firstName
+                              ? ' (You)'
+                              : ''}
+                          </span>
                         </td>
                         <td className="w-full text-center">
                           {data?.buyer?.firstName
                             ? data.buyer.firstName
                             : 'TBI'}
+                          <span className="font-bold">
+                            {data?.buyer?.firstName === userData.firstName
+                              ? ' (You)'
+                              : ''}
+                          </span>
                         </td>
                         <td className="w-full text-center"> {data.status} </td>
                         <td className="w-full text-center"> {data.txnItem} </td>

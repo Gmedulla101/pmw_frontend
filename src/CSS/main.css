@@ -67,3 +67,8 @@ body {
   transition: all;
   transition-duration: 0.3s;
 }
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  display: none;
+}
