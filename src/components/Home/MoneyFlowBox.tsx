@@ -1,16 +1,19 @@
-import tableData from '../../utils/tableDummy';
+import { TableData } from '../../hooks/useFetchHomeData';
+import { useGlobalUserContext } from '../../context/UserContext';
 
-const MoneyFlowBox = () => {
+const MoneyFlowBox = ({ tableData }: { tableData: TableData[] }) => {
+  const { userData } = useGlobalUserContext();
+
   const completedTxns = tableData.filter((data) => {
-    return data.transactionStatus === 'completed';
+    return data.status === 'completed';
   });
 
   const completedAsBuyer = completedTxns.filter((data) => {
-    return data.userStatus === 'buyer';
+    return data.buyer.firstName === userData.firstName;
   });
 
   const completedAsSeller = completedTxns.filter((data) => {
-    return data.userStatus === 'seller';
+    return data.seller.firstName === userData.firstName;
   });
 
   let totalTxns = 0;
@@ -18,13 +21,13 @@ const MoneyFlowBox = () => {
   let totalBuyerTxns = 0;
 
   for (let i = 0; i < completedTxns.length; i++) {
-    totalTxns = totalTxns + completedTxns[i]?.transactionValue;
+    totalTxns = totalTxns + completedTxns[i]?.txnItemValue;
   }
   for (let i = 0; i < completedAsBuyer.length; i++) {
-    totalBuyerTxns = totalBuyerTxns + completedAsBuyer[i]?.transactionValue;
+    totalBuyerTxns = totalBuyerTxns + completedAsBuyer[i]?.txnItemValue;
   }
   for (let i = 0; i < completedAsSeller.length; i++) {
-    totalSellerTxns = totalSellerTxns + completedAsSeller[i]?.transactionValue;
+    totalSellerTxns = totalSellerTxns + completedAsSeller[i]?.txnItemValue;
   }
 
   return (

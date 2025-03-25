@@ -2,12 +2,12 @@ import { useState } from 'react';
 import axios from 'axios';
 import { useGlobalUserContext } from '../context/UserContext';
 
-type TableData = {
+export type TableData = {
   seller: any;
   buyer: any;
   txnItem: string;
   txnItemValue: number;
-  status: boolean;
+  status: string;
 };
 
 const API = import.meta.env.VITE_BASE_API_URL;

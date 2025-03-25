@@ -1,11 +1,11 @@
-import tableData from '../../utils/tableDummy';
-const TxnInfoBox = () => {
+import { TableData } from '../../hooks/useFetchHomeData';
+const TxnInfoBox = ({ tableData }: { tableData: TableData[] }) => {
   const completedTxns = tableData.filter((data) => {
-    return data.transactionStatus === 'completed';
+    return data.status === 'completed';
   });
 
   const pendingTxns = tableData.filter((data) => {
-    return data.transactionStatus === 'pending';
+    return data.status === 'pending';
   });
 
   return (

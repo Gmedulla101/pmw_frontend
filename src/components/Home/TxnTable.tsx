@@ -1,13 +1,6 @@
 import useFetchHomeData from '../../hooks/useFetchHomeData';
 import LoaderComponent from '../LoaderComponent';
-
-type TableData = {
-  seller: any;
-  buyer: any;
-  txnItem: string;
-  txnItemValue: number;
-  status: boolean;
-};
+import { TableData } from '../../hooks/useFetchHomeData';
 
 const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
   const { isLoading } = useFetchHomeData();
@@ -15,7 +8,10 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
   return (
     <>
       {tableData.length < 1 ? (
-        <h1> You haven't created any transactions </h1>
+        <h1 className="text-center font-semibold text-xl md:text-2xl">
+          {' '}
+          You haven't created any transactions{' '}
+        </h1>
       ) : (
         <section>
           {isLoading ? (
