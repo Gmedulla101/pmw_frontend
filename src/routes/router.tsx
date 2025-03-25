@@ -6,6 +6,7 @@ import Home from '../pages/Home';
 import SignIn from '../pages/SignIn';
 import SignUp from '../pages/SignUp';
 import Profile from '../pages/Profile';
+import CreateTxn from '../pages/CreateTxn';
 
 const router = createBrowserRouter([
   {
@@ -27,6 +28,10 @@ const router = createBrowserRouter([
       {
         path: '/user-profile',
         element: <Profile />,
+      },
+      {
+        path: '/create-transaction',
+        element: <CreateTxn />,
       },
     ],
   },

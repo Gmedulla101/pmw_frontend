@@ -13,46 +13,56 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
           You haven't created any transactions{' '}
         </h1>
       ) : (
-        <section>
+        <section className="overflow-x-scroll rounded-t-2xl">
           {isLoading ? (
             <LoaderComponent />
           ) : (
-            <table className="w-full">
-              <thead className="block w-full bg-black py-3 px-3 rounded-t-lg text-white font-bold">
-                <tr className="text-[14px] flex flex-row justify-between w-full ">
-                  <td className="w-full text-center"> Seller </td>
-                  <td className="w-full text-center"> Buyer </td>
-                  <td className="w-full text-center"> Transaction Status </td>
-                  <td className="w-full text-center"> Item </td>
-                  <td className="w-full text-center"> Transation Value </td>
-                </tr>
-              </thead>
-              <tbody className="w-full bg-gray-200 py-3 px-3 rounded-b-lg">
-                {tableData?.map((data: any, i) => {
-                  return (
-                    <tr
-                      key={i}
-                      className="text-[14px] flex flex-row justify-between w-full py-3 px-3"
-                    >
-                      <td className="w-full text-center">
-                        {data?.seller?.firstName
-                          ? data.seller.firstName
-                          : 'TBI'}
-                      </td>
-                      <td className="w-full text-center">
-                        {data?.buyer?.firstName ? data.buyer.firstName : 'TBI'}
-                      </td>
-                      <td className="w-full text-center"> {data.status} </td>
-                      <td className="w-full text-center"> {data.txnItem} </td>
-                      <td className="w-full text-center">
-                        {' '}
-                        {data.txnItemValue.toLocaleString()}{' '}
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
+            <>
+              <div>
+                {' '}
+                <p className="text-xs text-gray-500 mb-1">
+                  Scroll to see more details about your transactions
+                </p>
+              </div>
+              <table className="w-[700px]">
+                <thead className="block w-full bg-black py-3 px-3 text-white font-bold">
+                  <tr className="text-[14px] flex flex-row justify-between w-full ">
+                    <td className="w-full text-center"> Seller </td>
+                    <td className="w-full text-center"> Buyer </td>
+                    <td className="w-full text-center"> Transaction Status </td>
+                    <td className="w-full text-center"> Item </td>
+                    <td className="w-full text-center"> Transation Value </td>
+                  </tr>
+                </thead>
+                <tbody className="w-full bg-gray-200 py-3 px-3 rounded-b-lg">
+                  {tableData?.map((data: any, i) => {
+                    return (
+                      <tr
+                        key={i}
+                        className="text-[14px] flex flex-row justify-between w-full py-3 px-3"
+                      >
+                        <td className="w-full text-center">
+                          {data?.seller?.firstName
+                            ? data.seller.firstName
+                            : 'TBI'}
+                        </td>
+                        <td className="w-full text-center">
+                          {data?.buyer?.firstName
+                            ? data.buyer.firstName
+                            : 'TBI'}
+                        </td>
+                        <td className="w-full text-center"> {data.status} </td>
+                        <td className="w-full text-center"> {data.txnItem} </td>
+                        <td className="w-full text-center">
+                          {' '}
+                          {data.txnItemValue.toLocaleString()}{' '}
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </>
           )}
         </section>
       )}

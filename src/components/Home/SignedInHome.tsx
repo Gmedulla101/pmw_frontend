@@ -1,4 +1,5 @@
 import { useEffect } from 'react';
+import { Link } from 'react-router';
 
 //IMPORTING HELPER COMPONENTS AND ASSETS
 import TxnInfoBox from './TxnInfoBox';
@@ -26,19 +27,30 @@ const SignedInHome = () => {
 
         {/* ACTION BUTTON */}
         <section className="mt-5 flex flex-row sm:gap-5 justify-around">
-          <button className="flex flex-row justify-center items-center w-[45%] rounded-lg py-1 px-2 gap-2 text-white bg-gray-800 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%]">
-            <img src={create} alt="" className="w-8" />
-            <span>Create a transaction</span>
-          </button>
+          <Link
+            to={'/create-transaction'}
+            className="flex justify-center w-[45%] rounded-lg py-1 px-2  text-white bg-gray-800 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%] text-xs md:text-base"
+          >
+            <button className="flex justify-center items-center gap-2 cursor-pointer">
+              <img src={create} alt="" className="w-5 md:w-8" />
+              <span>Create a transaction</span>
+            </button>
+          </Link>
 
-          <button className="flex flex-row justify-center items-center w-[45%] rounded-lg py-1 px-2 gap-2 text-white bg-gray-500 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%]">
-            <img src={join} alt="" className="w-12" />
-            <span>Join a transaction</span>
-          </button>
+          <Link
+            to={''}
+            className="flex  justify-center  w-[45%] rounded-lg py-1 px-2  text-white bg-gray-500 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%] text-xs md:text-base"
+          >
+            <button className="flex flex-row justify-center items-center gap-2 cursor-pointer">
+              <img src={join} alt="" className="w-8 md:w-12" />
+              <span>Join a transaction</span>
+            </button>
+          </Link>
         </section>
 
         {/* TRANSACTIONS TABLE */}
         <section className="mt-16 mx-3 lg:mx-8">
+      
           <TxnTable tableData={tableData} />
         </section>
       </main>
