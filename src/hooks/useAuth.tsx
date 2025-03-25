@@ -82,7 +82,7 @@ const useAuth = () => {
       toast.success('User logged in!');
 
       setTimeout(() => {
-        navigate('/');
+        window.location.href = '/';
       }, 3000);
     } catch (error: any) {
       if (error?.response?.data?.msg) {
@@ -94,15 +94,15 @@ const useAuth = () => {
   };
 
   const logOut = () => {
-     localStorage.removeItem('pw_token')
-     localStorage.removeItem('pw_user');
-     setUserData({});
-     setIsSignedIn(false);
+    localStorage.removeItem('pw_token');
+    localStorage.removeItem('pw_user');
+    setUserData({});
+    setIsSignedIn(false);
 
-     toast.success('Successfully signed out ');
-      setTimeout(() => {
-        navigate('/');
-      }, 3000);
+    toast.success('Successfully signed out ');
+    setTimeout(() => {
+      navigate('/');
+    }, 3000);
   };
 
   return {

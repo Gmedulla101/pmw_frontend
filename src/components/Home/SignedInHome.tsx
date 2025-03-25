@@ -1,3 +1,5 @@
+import { useEffect } from 'react';
+
 //IMPORTING HELPER COMPONENTS AND ASSETS
 import TxnInfoBox from './TxnInfoBox';
 import MoneyFlowBox from './MoneyFlowBox';
@@ -5,8 +7,15 @@ import create from '../../assets/plus.png';
 import join from '../../assets/partnership.png';
 
 import TxnTable from './TxnTable';
+import useFetchHomeData from '../../hooks/useFetchHomeData';
 
 const SignedInHome = () => {
+  const { tableData, fetchData } = useFetchHomeData();
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
   return (
     <>
       <main className="mx-3 lg:mx-10">
@@ -30,7 +39,7 @@ const SignedInHome = () => {
 
         {/* TRANSACTIONS TABLE */}
         <section className="mt-16 mx-3 lg:mx-8">
-          <TxnTable />
+          <TxnTable tableData={tableData} />
         </section>
       </main>
     </>
