@@ -6,6 +6,9 @@ import { TableData } from '../../hooks/useFetchHomeData';
 //IMPORTING HELPER COMPONENTS
 import LoaderComponent from '../LoaderComponent';
 import { Link } from 'react-router';
+import yellowBtn from '../../assets/yellowButton.png';
+import redBtn from '../../assets/redButton.png';
+import greenBtn from '../../assets/greenButton.png';
 
 const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
   const { isLoading } = useFetchHomeData();
@@ -26,6 +29,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
               <table className="w-[700px] md:w-full">
                 <thead className="block w-full bg-black py-3 px-3 text-white font-bold">
                   <tr className="text-[14px] flex flex-row justify-between w-full ">
+                    <td className="w-1/2"></td>
                     <td className="w-full text-center"> Seller </td>
                     <td className="w-full text-center"> Buyer </td>
                     <td className="w-full text-center"> Transaction Status </td>
@@ -34,46 +38,57 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                   </tr>
                 </thead>
                 <tbody className="w-full bg-gray-200 py-3 px-3 rounded-b-lg">
-                  {tableData?.map((data: any, i) => {
+                  {tableData?.map((data: any, i: number) => {
                     return (
-                      <Link to={`/transactions/${data.id}`}>
-                        <tr
-                          key={i}
-                          className="text-[14px] flex flex-row justify-between w-full py-3 px-3 transition hover:bg-gray-300 cursor-pointer"
-                        >
-                          <td className="w-full text-center">
-                            {data?.seller?.firstName
-                              ? data.seller.firstName
-                              : 'TBI'}
-                            <span className="font-bold">
-                              {data?.seller?.firstName === userData.firstName
-                                ? ' (You)'
-                                : ''}
-                            </span>
-                          </td>
-                          <td className="w-full text-center">
-                            {data?.buyer?.firstName
-                              ? data.buyer.firstName
-                              : 'TBI'}
-                            <span className="font-bold">
-                              {data?.buyer?.firstName === userData.firstName
-                                ? ' (You)'
-                                : ''}
-                            </span>
-                          </td>
-                          <td className="w-full text-center">
+                      <tr
+                        key={i}
+                        className="text-[14px] flex flex-row justify-between items-center w-full py-3 px-3"
+                      >
+                        <td className="w-1/2 h-[30px] text-xs bg-black text-white rounded-lg transition hover:scale-110 flex justify-center items-center">
+                          {' '}
+                          <Link to={`/transactions/${data.id}`}>
                             {' '}
-                            {data.status}{' '}
-                          </td>
-                          <td className="w-full text-center">
-                            {' '}
-                            {data.txnItem}{' '}
-                          </td>
-                          <td className="w-full text-center">
-                            {data.txnItemValue.toLocaleString()}
-                          </td>
-                        </tr>
-                      </Link>
+                            Details{' '}
+                          </Link>{' '}
+                        </td>
+                        <td className="w-full text-center">
+                          {data?.seller?.firstName
+                            ? data.seller.firstName
+                            : 'TBI'}
+                          <span className="font-bold">
+                            {data?.seller?.firstName === userData.firstName
+                              ? ' (You)'
+                              : ''}
+                          </span>
+                        </td>
+                        <td className="w-full text-center">
+                          {data?.buyer?.firstName
+                            ? data.buyer.firstName
+                            : 'TBI'}
+                          <span className="font-bold">
+                            {data?.buyer?.firstName === userData.firstName
+                              ? ' (You)'
+                              : ''}
+                          </span>
+                        </td>
+                        <td className="w-full text-center flex items-center gap-1">
+                          {' '}
+                          {data.status === 'pending' ? (
+                            <img className="w-2" src={yellowBtn} />
+                          ) : null}
+                          {data.status === 'confirmed' ? (
+                            <img className="w-2" src={greenBtn} />
+                          ) : null}
+                          {data.status === 'canceled' ? (
+                            <img className="w-2" src={redBtn} />
+                          ) : null}
+                          {data.status}
+                        </td>
+                        <td className="w-full text-center"> {data.txnItem} </td>
+                        <td className="w-full text-center">
+                          {data.txnItemValue.toLocaleString()}
+                        </td>
+                      </tr>
                     );
                   })}
                 </tbody>

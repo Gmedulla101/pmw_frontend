@@ -9,22 +9,31 @@ import { ToastContainer, toast } from 'react-toastify';
 //IMPORTING HELPER COMPONENTS
 import LoaderComponent from '../components/LoaderComponent';
 
+//IMPORTING IMAGE ASSETS
+import greenBtn from '../assets/greenButton.png';
+import yellowBtn from '../assets/yellowButton.png';
+import redBtn from '../assets/redButton.png';
+
 type TxnDetails = {
   buyerId: string | null;
   cashConfirmed: boolean;
   id: string;
   productConfirmed: boolean;
   sellerId: string | null;
-  status: 'pending' | 'confirmed';
+  status: 'pending' | 'confirmed' | 'canceled';
   txnItem: string;
   txnItemCategoryId: string;
   txnItemDescription: string;
   txnItemValue: number;
+  seller: any;
+  buyer: any;
+  category: any;
+  invitationSent: boolean;
 };
 
 const TxnPage = () => {
   const { id } = useParams();
-  const { userToken } = useGlobalUserContext();
+  const { userToken, userData } = useGlobalUserContext();
 
   const [txnDetails, setTxnDetails] = useState<TxnDetails>();
 
@@ -38,8 +47,6 @@ const TxnPage = () => {
         });
 
         setTxnDetails(response.data.txn);
-
-        console.log(response);
       } catch (error: any) {
         if (error?.response?.data?.msg) {
           toast.error(error?.response?.data?.msg);
@@ -52,17 +59,115 @@ const TxnPage = () => {
     fetchTxnDetails();
   }, []);
 
-  console.log(txnDetails);
-
   return (
     <>
       <ToastContainer />
       {!txnDetails ? (
         <LoaderComponent />
       ) : (
-        <section>
-          <h1> Money man </h1>
-        </section>
+        <main className="px-5 md:px-10 lg:px-36 mt-5">
+          <section className="border border-gray-200 p-4 rounded-lg">
+            <p>
+              <strong>
+                {txnDetails?.buyer?.firstName
+                  ? txnDetails?.buyer?.firstName
+                  : 'A yet to be determined buyer'}
+              </strong>{' '}
+              is buying a <strong>{txnDetails.category.categoryName}</strong>,
+              <strong> {txnDetails.txnItem}</strong>, from{' '}
+              <strong>
+                {txnDetails?.seller?.firstName
+                  ? txnDetails?.seller?.firstName
+                  : 'a yet to be determined seller'}
+              </strong>
+            </p>
+
+            <p className="mt-5 flex items-center gap-1">
+              {txnDetails.status === 'pending' ? (
+                <img className="w-4" src={yellowBtn} />
+              ) : (
+                ''
+              )}
+              {txnDetails.status === 'confirmed' ? (
+                <img className="w-4" src={greenBtn} />
+              ) : (
+                ''
+              )}
+              {txnDetails.status === 'canceled' ? (
+                <img className="w-4" src={redBtn} />
+              ) : (
+                ''
+              )}
+              {txnDetails.status}
+            </p>
+
+            <p className="font-semibold text-gray-400 text-xs mt-5">
+              Transaction: {txnDetails.id}
+            </p>
+          </section>
+
+          <section className="border border-gray-200 p-4 rounded-lg mt-5">
+            <h1 className="font-bold text-2xl mb-2"> Item/Service details </h1>
+            <div className="flex justify-between">
+              <p>{txnDetails.txnItem}</p>
+              <p> #{txnDetails.txnItemValue.toLocaleString()} </p>
+            </div>
+
+            <div className="mt-2">
+              <p
+                dangerouslySetInnerHTML={{
+                  __html: txnDetails.txnItemDescription.replace(/\n/g, '<br>'),
+                }}
+              ></p>
+            </div>
+
+            <div className="mt-5 flex justify-between">
+              <p> Cash:</p>
+              <p>
+                {' '}
+                {txnDetails.cashConfirmed ? 'Deposited' : 'Not deposited'}{' '}
+              </p>
+            </div>
+
+            <div className="mt-5 flex justify-between">
+              <p> Product:</p>
+              <p>
+                {' '}
+                {txnDetails.productConfirmed
+                  ? 'Delivered'
+                  : 'Not delivered'}{' '}
+              </p>
+            </div>
+
+            <div className="mt-5 flex justify-between">
+              <p> Escrow fee:</p>
+              <p>#{(txnDetails.txnItemValue * 0.02).toLocaleString()}</p>
+            </div>
+          </section>
+
+          <section className="mb-12">
+            {!txnDetails.invitationSent ? (
+              <div className="flex justify-center mt-5">
+                <button className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                  Invite transaction partner
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+
+            {txnDetails.seller?.username !== userData.username &&
+            txnDetails.buyer?.username !== userData.username ? (
+              <div className="flex justify-center mt-5">
+                <button className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                  Join Transaction
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+          </section>
+        </main>
       )}
     </>
   );
