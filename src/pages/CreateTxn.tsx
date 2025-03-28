@@ -30,15 +30,19 @@ const CreateTxn = () => {
 
   const handleSubmit = async () => {
     try {
-      await axios.post(`${API}/txn/create-transaction`, txnDetails, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
+      const response = await axios.post(
+        `${API}/txn/create-transaction`,
+        txnDetails,
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
 
       toast.success('Transaction created!');
       setTimeout(() => {
-        navigate('/');
+        navigate(`/transactions/${response.data.transaction.id}`);
       }, 3000);
     } catch (error: any) {
       if (error?.response?.data?.msg) {

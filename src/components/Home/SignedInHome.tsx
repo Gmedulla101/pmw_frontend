@@ -57,6 +57,9 @@ const SignedInHome = () => {
               <p className="text-xs text-gray-500 mb-1">
                 Scroll to see more details about your transactions
               </p>
+              <p className="text-xs text-gray-500 mb-1">
+                Click to see transaction details
+              </p>
             </div>
           )}
           <TxnTable tableData={tableData} />
