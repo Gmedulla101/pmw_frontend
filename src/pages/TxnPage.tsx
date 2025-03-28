@@ -5,9 +5,11 @@ import axios from 'axios';
 import { API } from '../hooks/useAuth';
 import { useGlobalUserContext } from '../context/UserContext';
 import { ToastContainer, toast } from 'react-toastify';
+import { createPortal } from 'react-dom';
 
 //IMPORTING HELPER COMPONENTS
 import LoaderComponent from '../components/LoaderComponent';
+import InvitationModal from '../components/InvitationModal';
 
 //IMPORTING IMAGE ASSETS
 import greenBtn from '../assets/greenButton.png';
@@ -36,6 +38,7 @@ const TxnPage = () => {
   const { userToken, userData } = useGlobalUserContext();
 
   const [txnDetails, setTxnDetails] = useState<TxnDetails>();
+  const [isModal, setIsModal] = useState<boolean>(false);
 
   useEffect(() => {
     const fetchTxnDetails = async () => {
@@ -148,7 +151,12 @@ const TxnPage = () => {
           <section className="mb-12">
             {!txnDetails.invitationSent ? (
               <div className="flex justify-center mt-5">
-                <button className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                <button
+                  onClick={() => {
+                    setIsModal(true);
+                  }}
+                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+                >
                   Invite transaction partner
                 </button>
               </div>
@@ -167,6 +175,8 @@ const TxnPage = () => {
               ''
             )}
           </section>
+
+          {isModal ? createPortal(<InvitationModal />, document.body) : null}
         </main>
       )}
     </>
