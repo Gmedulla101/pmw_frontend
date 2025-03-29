@@ -31,6 +31,7 @@ type TxnDetails = {
   buyer: any;
   category: any;
   invitationSent: boolean;
+  initiatorId: string;
 };
 
 const TxnPage = () => {
@@ -61,6 +62,8 @@ const TxnPage = () => {
 
     fetchTxnDetails();
   }, []);
+
+  console.log(txnDetails);
 
   return (
     <>
@@ -105,7 +108,7 @@ const TxnPage = () => {
             </p>
 
             <p className="font-semibold text-gray-400 text-xs mt-5">
-              Transaction: {txnDetails.id}
+              Transaction ID: {txnDetails.id}
             </p>
           </section>
 
@@ -158,6 +161,16 @@ const TxnPage = () => {
                   className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
                 >
                   Invite transaction partner
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+
+            {txnDetails.initiatorId === userData.userId ? (
+              <div className="flex justify-center mt-5">
+                <button className="px-2 py-4 transition bg-red-500 text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                  Cancel transaction
                 </button>
               </div>
             ) : (

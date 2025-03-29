@@ -11,7 +11,7 @@ const InvitationModal = () => {
 
   const sendInvite = async () => {
     try {
-      const response = await axios.put(
+      await axios.put(
         `${API}/txn/update-transaction/${id}`,
         { invitationSent: true },
         {
@@ -20,8 +20,8 @@ const InvitationModal = () => {
           },
         }
       );
-      console.log(response);
-      navigate(-1);
+
+      navigate('/');
     } catch (error) {
       console.log(error);
     }
@@ -43,6 +43,7 @@ const InvitationModal = () => {
               className="w-full border text-center border-gray-400 rounded-lg text-xs py-2 "
               type="text"
               value={id}
+              readOnly
             />
           </div>
 
