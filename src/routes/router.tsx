@@ -8,6 +8,7 @@ import SignUp from '../pages/SignUp';
 import Profile from '../pages/Profile';
 import CreateTxn from '../pages/CreateTxn';
 import TxnPage from '../pages/TxnPage';
+import JoinTxn from '../pages/JoinTxn';
 
 const router = createBrowserRouter([
   {
@@ -37,6 +38,10 @@ const router = createBrowserRouter([
       {
         path: '/transactions/:id',
         element: <TxnPage />,
+      },
+      {
+        path: '/join-transaction',
+        element: <JoinTxn />,
       },
     ],
   },

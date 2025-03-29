@@ -38,7 +38,7 @@ const SignedInHome = () => {
           </Link>
 
           <Link
-            to={''}
+            to={'/join-transaction'}
             className="flex  justify-center  w-[45%] rounded-lg py-1 px-2  text-white bg-gray-500 font-bold cursor-pointer transition hover:scale-105 lg:w-[35%] text-xs md:text-base"
           >
             <button className="flex flex-row justify-center items-center gap-2 cursor-pointer">

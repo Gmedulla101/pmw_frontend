@@ -16,7 +16,7 @@ import greenBtn from '../assets/greenButton.png';
 import yellowBtn from '../assets/yellowButton.png';
 import redBtn from '../assets/redButton.png';
 
-type TxnDetails = {
+export type TxnDetails = {
   buyerId: string | null;
   cashConfirmed: boolean;
   id: string;
