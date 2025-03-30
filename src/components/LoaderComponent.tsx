@@ -1,7 +1,7 @@
 const LoaderComponent = () => {
   return (
     <div className="flex justify-center items-center">
-      <p className="text-3xl text-center"> Loading... </p>
+      <span className="loading loading-spinner w-12"></span>
     </div>
   );
 };

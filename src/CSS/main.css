@@ -4,6 +4,7 @@
 
 /* TAILWIND IMPORT */
 @import 'tailwindcss';
+@plugin "daisyui";
 
 @theme {
   --font-nunito: 'Nunito', sans-serif;
