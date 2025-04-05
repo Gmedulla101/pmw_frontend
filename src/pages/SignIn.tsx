@@ -3,6 +3,7 @@ import { RootState, AppDispatch } from '../redux/store';
 import { handleForm } from '../redux/features/authSlice';
 import useAuth from '../hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
+import { Link } from 'react-router';
 
 const SignIn = () => {
   const { form } = useSelector((store: RootState) => store.auth);
@@ -49,6 +50,19 @@ const SignIn = () => {
           value={form.password}
           onChange={handleFormChange}
         />
+
+        <div>
+          <p className="text-xs font-semibold">
+            {' '}
+            Forgot password?{' '}
+            <Link to={'/forgot-password'}>
+              {' '}
+              <span className="bg-black text-white rounded-lg px-2 inline-block transition hover:scale-105 cursor-pointer">
+                Click here
+              </span>
+            </Link>{' '}
+          </p>
+        </div>
 
         <button
           onClick={handleLogin}

@@ -9,6 +9,7 @@ import Profile from '../pages/Profile';
 import CreateTxn from '../pages/CreateTxn';
 import TxnPage from '../pages/TxnPage';
 import JoinTxn from '../pages/JoinTxn';
+import ForgotPassword from '../pages/ForgotPassword';
 
 const router = createBrowserRouter([
   {
@@ -42,6 +43,10 @@ const router = createBrowserRouter([
       {
         path: '/join-transaction',
         element: <JoinTxn />,
+      },
+      {
+        path: '/forgot-password',
+        element: <ForgotPassword />,
       },
     ],
   },
