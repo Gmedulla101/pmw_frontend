@@ -1,6 +1,10 @@
+//ALL THINGS REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
 import { handleChange } from '../../redux/features/resetSlice';
+
+//OTHER DEPS
+import axios from 'axios';
 
 const ForgotPassword = () => {
   const { email } = useSelector((store: RootState) => store.reset);
@@ -15,6 +19,8 @@ const ForgotPassword = () => {
       })
     );
   };
+
+  const proceedToCodeConfirmation = async () => {};
 
   return (
     <>
@@ -42,8 +48,8 @@ const ForgotPassword = () => {
 
             <div className="flex justify-center">
               <button
-                id="signup"
-                className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-3 w-56"
+                onClick={proceedToCodeConfirmation}
+                className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-3 w-56"
               >
                 <p>Log in</p>
               </button>

@@ -98,7 +98,7 @@ const SignUp = () => {
         <button
           onClick={handleRegister}
           id="signup"
-          className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-10"
+          className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-10"
         >
           <p>Sign up</p>
         </button>

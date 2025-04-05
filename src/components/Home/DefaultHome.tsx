@@ -19,18 +19,12 @@ const DefaultHome = () => {
 
       <section className="mt-7 flex justify-center items-center gap-5">
         <Link to={'/sign-up'}>
-          <button
-            id="signup"
-            className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer"
-          >
+          <button className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer">
             <p>Sign up</p>
           </button>
         </Link>
         <Link to={'/sign-in'}>
-          <button
-            id="signin"
-            className="bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg cursor-pointer"
-          >
+          <button className="button bg-gray-600 text-white font-semibold py-2 px-6 rounded-lg cursor-pointer">
             <p>Sign In</p>
           </button>
         </Link>

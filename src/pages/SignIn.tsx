@@ -67,7 +67,7 @@ const SignIn = () => {
         <button
           onClick={handleLogin}
           id="signup"
-          className="bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-8"
+          className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-8"
         >
           <p>Log in</p>
         </button>

@@ -27,12 +27,11 @@ body {
   height: 100%;
 }
 
-#signup,
-#signin {
+.button {
   position: relative;
 }
 
-#signup::after {
+.button::after {
   content: '';
   display: block;
   position: absolute;
@@ -45,12 +44,12 @@ body {
   opacity: 0.5;
 }
 
-#signin:hover::after {
+.button:hover::after {
   width: 100%;
   transition: all;
   transition-duration: 0.3s;
 }
-#signin::after {
+.button::after {
   content: '';
   display: block;
   position: absolute;
@@ -63,7 +62,7 @@ body {
   opacity: 0.5;
 }
 
-#signup:hover::after {
+.button:hover::after {
   width: 100%;
   transition: all;
   transition-duration: 0.3s;
