@@ -9,7 +9,7 @@ import Profile from '../pages/Profile';
 import CreateTxn from '../pages/CreateTxn';
 import TxnPage from '../pages/TxnPage';
 import JoinTxn from '../pages/JoinTxn';
-import ForgotPassword from '../pages/ForgotPassword';
+import ForgotPassword from '../pages/pswd_reset_flow/ForgotPassword';
 
 const router = createBrowserRouter([
   {
