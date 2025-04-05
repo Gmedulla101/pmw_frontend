@@ -72,7 +72,7 @@ const ForgotPassword = () => {
                 onClick={proceedToCodeConfirmation}
                 className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-3 w-56"
               >
-                <p>Log in</p>
+                <p> Proceed </p>
               </button>
             </div>
           </div>

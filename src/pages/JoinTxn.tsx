@@ -13,7 +13,7 @@ import { useNavigate } from 'react-router';
 const JoinTxn = () => {
   const navigate = useNavigate();
 
-  const [id, setId] = useState<string>();
+  const [id, setId] = useState<string>('');
   const { userToken } = useGlobalUserContext();
   const [txnDetails, setTxnDetails] = useState<TxnDetails>();
 

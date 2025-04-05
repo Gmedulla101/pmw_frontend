@@ -63,8 +63,6 @@ const TxnPage = () => {
     fetchTxnDetails();
   }, []);
 
-  console.log(txnDetails);
-
   return (
     <>
       <ToastContainer />
