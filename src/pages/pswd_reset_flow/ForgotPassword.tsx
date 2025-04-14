@@ -1,7 +1,7 @@
 //ALL THINGS REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import resetReducer, { handleChange } from '../../redux/features/resetSlice';
+import { handleChange } from '../../redux/features/resetSlice';
 
 //OTHER DEPS AND HOOKS
 import { ToastContainer } from 'react-toastify';
