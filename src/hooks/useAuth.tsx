@@ -1,22 +1,50 @@
 import axios from 'axios';
-import { useNavigate } from 'react-router';
-import { useSelector } from 'react-redux';
-import { RootState } from '../redux/store';
+import { useSelector, useDispatch } from 'react-redux';
+import { RootState, AppDispatch } from '../redux/store';
 import { useGlobalUserContext } from '../context/UserContext';
 import { toast } from 'react-toastify';
+import { setIsLoading } from '../redux/features/resetSlice';
+
+import { useNavigate } from 'react-router';
 
 export const API = import.meta.env.VITE_BASE_API_URL;
 
 const useAuth = () => {
+  const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
+
   const { form } = useSelector((store: RootState) => store.auth);
-  const { firstName, lastName, username, email, password, confirmPassword } =
-    form;
+  const reset = useSelector((store: RootState) => store.reset);
 
   //AUTH LOGIC
-  const navigate = useNavigate();
+
   const { setIsSignedIn, setUserData } = useGlobalUserContext();
 
+  // Centralized function to clear auth state
+  const clearAuth = () => {
+    localStorage.removeItem('pw_token');
+    localStorage.removeItem('pw_user');
+    setUserData(null);
+    setIsSignedIn(false);
+  };
+
+  const initialiseAuth = () => {
+    const token = localStorage.getItem('pw_token');
+    const user = localStorage.getItem('pw_user');
+
+    if (token && user) {
+      try {
+        setUserData(JSON.parse(user));
+        setIsSignedIn(true);
+      } catch (error: any) {
+        clearAuth();
+      }
+    }
+  };
+
   const handleRegister = async () => {
+    const { firstName, lastName, username, email, password, confirmPassword } =
+      form;
     try {
       //EDGE CASES AND VALIDATION
       if (
@@ -55,7 +83,7 @@ const useAuth = () => {
       toast.success('User has been registered!');
 
       setTimeout(() => {
-        navigate('/');
+        window.location.href = '/';
       }, 3000);
     } catch (error: any) {
       if (error.response.data.msg) {
@@ -67,6 +95,7 @@ const useAuth = () => {
   };
 
   const handleLogin = async () => {
+    const { email, password } = form;
     try {
       const response = await axios.post(`${API}/auth/user-login`, {
         email,
@@ -101,14 +130,47 @@ const useAuth = () => {
 
     toast.success('Successfully signed out ');
     setTimeout(() => {
-      navigate('/');
+      window.location.href = '/';
     }, 3000);
+  };
+
+  const resetPassword = async () => {
+    const { email, code, password, confirmPassword } = reset;
+    try {
+      if (!email || !code || !password || !confirmPassword) {
+        toast.error('Please fill all fields');
+      }
+
+      dispatch(setIsLoading(true));
+
+      await axios.post(`${API}/auth/reset-password`, {
+        email,
+        code,
+        password,
+      });
+
+      toast.success('Password reset successfully!');
+      dispatch(setIsLoading(false));
+
+      setTimeout(() => {
+        navigate('/sign-in');
+      }, 3000);
+    } catch (error: any) {
+      dispatch(setIsLoading(false));
+      if (error.response.data.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
+    }
   };
 
   return {
     handleLogin,
     handleRegister,
     logOut,
+    initialiseAuth,
+    resetPassword,
   };
 };
 

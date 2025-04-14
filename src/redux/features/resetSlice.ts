@@ -2,7 +2,10 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   email: '',
-  code: null,
+  code: undefined,
+  password: '',
+  confirmPassword: '',
+  isLoading: false,
 };
 
 const resetSlice = createSlice({
@@ -13,10 +16,13 @@ const resetSlice = createSlice({
       const { name, value } = action.payload;
       state[name] = value;
     },
+    setIsLoading: (state: any, action) => {
+      state.isLoading = action.payload;
+    },
   },
 });
 
-export const { handleChange } = resetSlice.actions;
+export const { handleChange, setIsLoading } = resetSlice.actions;
 
 const resetReducer = resetSlice.reducer;
 

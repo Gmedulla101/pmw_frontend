@@ -1,21 +1,20 @@
 //ALL THINGS REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { handleChange } from '../../redux/features/resetSlice';
+import { handleChange, setIsLoading } from '../../redux/features/resetSlice';
 
 //OTHER DEPS AND HOOKS
 import axios from 'axios';
-import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
 import { API } from '../../hooks/useAuth';
+import useAuth from '../../hooks/useAuth';
 
 const ForgotPassword = () => {
-  const { email } = useSelector((store: RootState) => store.reset);
-
-  console.log(email);
+  const { email, code, password, confirmPassword, isLoading } = useSelector(
+    (store: RootState) => store.reset
+  );
 
   const dispatch = useDispatch<AppDispatch>();
-  const navigate = useNavigate();
 
   const handleInputChange = (e: any) => {
     dispatch(
@@ -26,14 +25,14 @@ const ForgotPassword = () => {
     );
   };
 
-  const proceedToCodeConfirmation = async () => {
+  const getCode = async () => {
     try {
+      dispatch(setIsLoading(true));
       await axios.post(`${API}/auth/confirm-email`, { email });
       toast.success('Email confirmed!');
-      setTimeout(() => {
-        navigate('/code-confirmation');
-      }, 2000);
+      dispatch(setIsLoading(false));
     } catch (error: any) {
+      dispatch(setIsLoading(false));
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -41,6 +40,8 @@ const ForgotPassword = () => {
       }
     }
   };
+
+  const { resetPassword } = useAuth();
 
   return (
     <>
@@ -58,18 +59,66 @@ const ForgotPassword = () => {
               If your email exists, we'll send you a confirmation code to reset
               your email
             </p>
-            <input
-              type="email"
-              name="email"
-              value={email}
-              onChange={handleInputChange}
-              placeholder="your_email@example.com"
-              className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 w-full focus:border-gray-700"
-            />
+
+            <section className="flex flex-col gap-4">
+              <div className="flex items-center gap-2">
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleInputChange}
+                  placeholder="your_email@example.com"
+                  className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 w-full focus:border-gray-700"
+                />
+                <button
+                  onClick={getCode}
+                  className="button bg-black text-white font-semibold py-2 px-2 rounded-lg cursor-pointer w-36"
+                >
+                  {isLoading ? (
+                    <span className="loading loading-dots loading-lg"></span>
+                  ) : (
+                    <p> Get code </p>
+                  )}
+                </button>
+              </div>
+
+              <div>
+                <input
+                  type="number"
+                  name="code"
+                  value={code}
+                  onChange={handleInputChange}
+                  placeholder="Enter confirmation code"
+                  className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 w-full focus:border-gray-700 text-center"
+                />
+              </div>
+
+              <div>
+                <input
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={handleInputChange}
+                  placeholder="Enter your new password"
+                  className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 w-full focus:border-gray-700"
+                />
+              </div>
+
+              <div>
+                <input
+                  type="password"
+                  name="confirmPassword"
+                  value={confirmPassword}
+                  onChange={handleInputChange}
+                  placeholder="Re-enter your new password"
+                  className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 w-full focus:border-gray-700"
+                />
+              </div>
+            </section>
 
             <div className="flex justify-center">
               <button
-                onClick={proceedToCodeConfirmation}
+                onClick={resetPassword}
                 className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-3 w-56"
               >
                 <p> Proceed </p>

@@ -10,7 +10,6 @@ import CreateTxn from '../pages/CreateTxn';
 import TxnPage from '../pages/TxnPage';
 import JoinTxn from '../pages/JoinTxn';
 import ForgotPassword from '../pages/pswd_reset_flow/ForgotPassword';
-import ConfirmCode from '../pages/pswd_reset_flow/ConfirmCode';
 
 const router = createBrowserRouter([
   {
@@ -48,10 +47,6 @@ const router = createBrowserRouter([
       {
         path: '/forgot-password',
         element: <ForgotPassword />,
-      },
-      {
-        path: '/code-confirmation',
-        element: <ConfirmCode />,
       },
     ],
   },
