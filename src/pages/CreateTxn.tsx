@@ -42,7 +42,7 @@ const CreateTxn = () => {
 
       toast.success('Transaction created!');
       setTimeout(() => {
-        navigate(`/transactions/${response.data.transaction.id}`);
+        navigate(`/transaction/${response.data.transaction.id}`);
       }, 3000);
     } catch (error: any) {
       if (error?.response?.data?.msg) {

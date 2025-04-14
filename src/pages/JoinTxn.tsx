@@ -46,7 +46,7 @@ const JoinTxn = () => {
           },
         }
       );
-      navigate(`/transactions/${txnDetails?.id}`);
+      navigate(`/transaction/${txnDetails?.id}`);
     } catch (error: any) {
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);

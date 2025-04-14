@@ -37,7 +37,7 @@ const router = createBrowserRouter([
         element: <CreateTxn />,
       },
       {
-        path: '/transactions/:id',
+        path: '/transaction/:id',
         element: <TxnPage />,
       },
       {
