@@ -1,12 +1,10 @@
 //ALL THINGS REDUX
 import { useSelector, useDispatch } from 'react-redux';
 import { AppDispatch, RootState } from '../../redux/store';
-import { handleChange, setIsLoading } from '../../redux/features/resetSlice';
+import resetReducer, { handleChange } from '../../redux/features/resetSlice';
 
 //OTHER DEPS AND HOOKS
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { API } from '../../hooks/useAuth';
+import { ToastContainer } from 'react-toastify';
 import useAuth from '../../hooks/useAuth';
 
 const ForgotPassword = () => {
@@ -25,23 +23,7 @@ const ForgotPassword = () => {
     );
   };
 
-  const getCode = async () => {
-    try {
-      dispatch(setIsLoading(true));
-      await axios.post(`${API}/auth/confirm-email`, { email });
-      toast.success('Email confirmed!');
-      dispatch(setIsLoading(false));
-    } catch (error: any) {
-      dispatch(setIsLoading(false));
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  };
-
-  const { resetPassword } = useAuth();
+  const { getPasswordResetCode, resetPassword } = useAuth();
 
   return (
     <>
@@ -71,7 +53,15 @@ const ForgotPassword = () => {
                   className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 w-full focus:border-gray-700"
                 />
                 <button
-                  onClick={getCode}
+                  onClick={
+                    isLoading
+                      ? () => {
+                          return;
+                        }
+                      : () => {
+                          getPasswordResetCode();
+                        }
+                  }
                   className="button bg-black text-white font-semibold py-2 px-2 rounded-lg cursor-pointer w-36"
                 >
                   {isLoading ? (
@@ -118,10 +108,22 @@ const ForgotPassword = () => {
 
             <div className="flex justify-center">
               <button
-                onClick={resetPassword}
+                onClick={
+                  isLoading
+                    ? () => {
+                        return;
+                      }
+                    : () => {
+                        resetPassword();
+                      }
+                }
                 className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-3 w-56"
               >
-                <p> Proceed </p>
+                {isLoading ? (
+                  <span className="loading loading-dots loading-lg"></span>
+                ) : (
+                  <p> Proceed </p>
+                )}
               </button>
             </div>
           </div>

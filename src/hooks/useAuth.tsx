@@ -134,6 +134,23 @@ const useAuth = () => {
     }, 3000);
   };
 
+  const getPasswordResetCode = async () => {
+    const { email } = reset;
+    try {
+      dispatch(setIsLoading(true));
+      await axios.post(`${API}/auth/confirm-email`, { email });
+      toast.success('Email confirmed!');
+      dispatch(setIsLoading(false));
+    } catch (error: any) {
+      dispatch(setIsLoading(false));
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
+
   const resetPassword = async () => {
     const { email, code, password, confirmPassword } = reset;
     try {
@@ -170,6 +187,7 @@ const useAuth = () => {
     handleRegister,
     logOut,
     initialiseAuth,
+    getPasswordResetCode,
     resetPassword,
   };
 };
