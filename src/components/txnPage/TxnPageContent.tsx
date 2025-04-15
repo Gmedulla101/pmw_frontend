@@ -21,7 +21,7 @@ export type TxnDetails = {
   id: string;
   productConfirmed: boolean;
   sellerId: string | null;
-  status: 'pending' | 'confirmed' | 'canceled';
+  status: 'pending' | 'confirmed' | 'cancelled';
   txnItem: string;
   txnItemCategoryId: string;
   txnItemDescription: string;
@@ -37,7 +37,7 @@ const TxnPageContent = () => {
   const { id: txnId } = useParams();
   const location = useLocation();
   const { userData } = useGlobalUserContext();
-  const { txnDetails, fetchTxnDetails, joinTransaction } = useTxns();
+  const { txnDetails, fetchTxnDetails, joinTransaction, cancelTxn } = useTxns();
   const [isModal, setIsModal] = useState<boolean>(false);
 
   useEffect(() => {
@@ -78,7 +78,7 @@ const TxnPageContent = () => {
               ) : (
                 ''
               )}
-              {txnDetails.status === 'canceled' ? (
+              {txnDetails.status === 'cancelled' ? (
                 <img className="w-4" src={redBtn} />
               ) : (
                 ''
@@ -146,9 +146,15 @@ const TxnPageContent = () => {
               ''
             )}
 
-            {txnDetails.initiatorId === userData.userId ? (
+            {txnDetails.initiatorId === userData.userId &&
+            txnDetails.status !== 'cancelled' ? (
               <div className="flex justify-center mt-5">
-                <button className="px-2 py-4 transition bg-red-500 text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                <button
+                  onClick={() => {
+                    cancelTxn(txnId);
+                  }}
+                  className="px-2 py-4 transition bg-red-500 text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+                >
                   Cancel transaction
                 </button>
               </div>
@@ -166,6 +172,15 @@ const TxnPageContent = () => {
                   Join Transaction
                 </button>
               </div>
+            ) : (
+              ''
+            )}
+
+            {txnDetails.status === 'cancelled' ? (
+              <h2 className="font-bold text-center text-xl mt-5">
+                {' '}
+                This transaction has been cancelled{' '}
+              </h2>
             ) : (
               ''
             )}

@@ -29,7 +29,7 @@ const useTxns = () => {
       toast.success('Transaction created!');
       setTimeout(() => {
         navigate(`/transaction/${response.data.transaction.id}`);
-      }, 3000);
+      }, 1500);
     } catch (error: any) {
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
@@ -48,6 +48,31 @@ const useTxns = () => {
         },
       });
       setTxnDetails(response.data.txn);
+    } catch (error: any) {
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  //FUNCTIONALITY FOR CANCELLING TRANSACTIONS
+  const cancelTxn = async (txnId: string | undefined) => {
+    try {
+      await axios.put(
+        `${API}/txn/update-transaction/${txnId}`,
+        { status: 'cancelled' },
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      toast.success('Transaction cancelled');
+      setTimeout(() => {
+        navigate(-1);
+      }, 1500);
     } catch (error: any) {
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
@@ -90,6 +115,7 @@ const useTxns = () => {
     joinTransaction,
     makePayment,
     createTxn,
+    cancelTxn,
   };
 };
 

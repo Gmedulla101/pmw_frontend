@@ -79,7 +79,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                           {data.status === 'confirmed' ? (
                             <img className="w-2" src={greenBtn} />
                           ) : null}
-                          {data.status === 'canceled' ? (
+                          {data.status === 'cancelled' ? (
                             <img className="w-2" src={redBtn} />
                           ) : null}
                           {data.status}
