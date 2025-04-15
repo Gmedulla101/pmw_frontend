@@ -18,7 +18,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
     <>
       {tableData.length < 1 ? (
         <h1 className="text-center font-semibold text-xl md:text-2xl">
-          You haven't created any transactions{' '}
+          You haven't started any transactions{' '}
         </h1>
       ) : (
         <section className="overflow-x-scroll rounded-t-2xl">

@@ -1,13 +1,9 @@
 import { useState } from 'react';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
-import { useGlobalUserContext } from '../context/UserContext';
-import { API } from '../hooks/useAuth';
-import { useNavigate } from 'react-router';
+import { ToastContainer } from 'react-toastify';
+import useTxns from '../hooks/useTxns';
 
 const CreateTxn = () => {
-  const { userToken } = useGlobalUserContext();
-  const navigate = useNavigate();
+  const { createTxn } = useTxns();
 
   const [txnDetails, setTxnDetails] = useState({
     userRole: '',
@@ -26,31 +22,6 @@ const CreateTxn = () => {
         [name]: value,
       };
     });
-  };
-
-  const handleSubmit = async () => {
-    try {
-      const response = await axios.post(
-        `${API}/txn/create-transaction`,
-        txnDetails,
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
-
-      toast.success('Transaction created!');
-      setTimeout(() => {
-        navigate(`/transaction/${response.data.transaction.id}`);
-      }, 3000);
-    } catch (error: any) {
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error.message);
-      }
-    }
   };
 
   return (
@@ -141,7 +112,7 @@ const CreateTxn = () => {
 
         <div className="flex justify-center mt-10">
           <button
-            onClick={handleSubmit}
+            onClick={createTxn}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
             Create transaction
