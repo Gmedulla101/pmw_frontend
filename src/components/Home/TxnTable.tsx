@@ -46,7 +46,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                       >
                         <td className="w-1/2 h-[30px] text-xs bg-black text-white rounded-lg transition hover:scale-110 flex justify-center items-center">
                           {' '}
-                          <Link to={`/transactions/${data.id}`}>
+                          <Link to={`/transaction/${data.id}`}>
                             {' '}
                             Details{' '}
                           </Link>{' '}

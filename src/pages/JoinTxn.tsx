@@ -6,7 +6,7 @@ import { API } from '../hooks/useAuth';
 import axios from 'axios';
 import { useState } from 'react';
 import { useGlobalUserContext } from '../context/UserContext';
-import { TxnDetails } from './TxnPage';
+import { TxnDetails } from '../components/txnPage/TxnPageContent';
 import { ToastContainer, toast } from 'react-toastify';
 import { useNavigate } from 'react-router';
 
