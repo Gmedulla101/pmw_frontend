@@ -1,10 +1,11 @@
 //IMPOORTING REQUIRED DEPS
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router';
+import { useParams, useLocation } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 
 //IMPORTING HOOKS
 import { useGlobalUserContext } from '../../context/UserContext';
+import useTxns from '../../hooks/useTxns';
 import { createPortal } from 'react-dom';
 
 //TYPES, ASSETS, COMPONENTS AND MODALS
@@ -32,17 +33,16 @@ export type TxnDetails = {
   initiatorId: string;
 };
 
-import useTxns from '../../hooks/useTxns';
-
 const TxnPageContent = () => {
   const { id: txnId } = useParams();
+  const location = useLocation();
   const { userData } = useGlobalUserContext();
-  const { txnDetails, fetchTxnDetails } = useTxns();
+  const { txnDetails, fetchTxnDetails, joinTransaction } = useTxns();
   const [isModal, setIsModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTxnDetails(txnId);
-  }, []);
+  }, [location.key]);
 
   return (
     <div>
@@ -159,7 +159,10 @@ const TxnPageContent = () => {
             {txnDetails.seller?.username !== userData.username &&
             txnDetails.buyer?.username !== userData.username ? (
               <div className="flex justify-center mt-5">
-                <button className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                <button
+                  onClick={joinTransaction}
+                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+                >
                   Join Transaction
                 </button>
               </div>
