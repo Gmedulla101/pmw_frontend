@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { useNavigate } from 'react-router';
 
 import { API } from './useAuth';
 import { useGlobalUserContext } from '../context/UserContext';
@@ -10,6 +11,7 @@ const useTxns = () => {
   const [txnDetails, setTxnDetails] = useState<TxnDetails>();
   const { userToken } = useGlobalUserContext();
 
+  const navigate = useNavigate();
 
   //FUNCTIONALITY TO FETCH THE TRANSACTION DETAILS ON THE TRANSACTION PAGE.
   const fetchTxnDetails = async (id: string | undefined) => {
@@ -29,9 +31,29 @@ const useTxns = () => {
     }
   };
 
-  
+  //FUNCTIONALITY TO JOIN A TRANSACTION
+  const joinTransaction = async () => {
+    try {
+      await axios.patch(
+        `${API}/txn/join-transaction/${txnDetails?.id}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      navigate(`/transaction/${txnDetails?.id}`);
+    } catch (error: any) {
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
 
-  return { fetchTxnDetails, txnDetails };
+  return { fetchTxnDetails, txnDetails, joinTransaction };
 };
 
 export default useTxns;
