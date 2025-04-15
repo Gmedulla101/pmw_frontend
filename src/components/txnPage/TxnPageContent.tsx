@@ -1,8 +1,7 @@
 //IMPOORTING REQUIRED DEPS
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
-import axios from 'axios';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 
 //IMPORTING HOOKS
 import { useGlobalUserContext } from '../../context/UserContext';
@@ -33,35 +32,16 @@ export type TxnDetails = {
   initiatorId: string;
 };
 
-import { API } from '../../hooks/useAuth';
+import useTxns from '../../hooks/useTxns';
 
 const TxnPageContent = () => {
-  const { id } = useParams();
-  const { userToken, userData } = useGlobalUserContext();
-
-  const [txnDetails, setTxnDetails] = useState<TxnDetails>();
+  const { id: txnId } = useParams();
+  const { userData } = useGlobalUserContext();
+  const { txnDetails, fetchTxnDetails } = useTxns();
   const [isModal, setIsModal] = useState<boolean>(false);
 
   useEffect(() => {
-    const fetchTxnDetails = async () => {
-      try {
-        const response = await axios.get(`${API}/txn/get-transaction/${id}`, {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        });
-
-        setTxnDetails(response.data.txn);
-      } catch (error: any) {
-        if (error?.response?.data?.msg) {
-          toast.error(error?.response?.data?.msg);
-        } else {
-          toast.error(error.message);
-        }
-      }
-    };
-
-    fetchTxnDetails();
+    fetchTxnDetails(txnId);
   }, []);
 
   return (
