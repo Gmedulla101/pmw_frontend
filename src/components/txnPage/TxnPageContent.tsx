@@ -37,8 +37,15 @@ const TxnPageContent = () => {
   const { id: txnId } = useParams();
   const location = useLocation();
   const { userData } = useGlobalUserContext();
-  const { txnDetails, fetchTxnDetails, joinTransaction, cancelTxn } = useTxns();
   const [isModal, setIsModal] = useState<boolean>(false);
+
+  const {
+    txnDetails,
+    fetchTxnDetails,
+    joinTransaction,
+    cancelTxn,
+    makePayment,
+  } = useTxns();
 
   useEffect(() => {
     fetchTxnDetails(txnId);
@@ -130,7 +137,9 @@ const TxnPageContent = () => {
             </div>
           </section>
 
+          {/* SECTION FOR USER ACTIONS, MULTIPLE BUTTONS WHICH SHOW BASED ON VARYING CONDITION */}
           <section className="mb-12">
+            {/* Invite a partner conditional */}
             {!txnDetails.invitationSent ? (
               <div className="flex justify-center mt-5">
                 <button
@@ -146,6 +155,37 @@ const TxnPageContent = () => {
               ''
             )}
 
+            {/* Payment conditional */}
+            {!txnDetails.cashConfirmed &&
+            txnDetails.buyer?.username === userData.username ? (
+              <div className="flex justify-center mt-5">
+                <button
+                  onClick={makePayment}
+                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+                >
+                  Make payment
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+
+            {/* Join transaction conditional */}
+            {txnDetails.seller?.username !== userData.username &&
+            txnDetails.buyer?.username !== userData.username ? (
+              <div className="flex justify-center mt-5">
+                <button
+                  onClick={joinTransaction}
+                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+                >
+                  Join Transaction
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+
+            {/* Cancel transaction conditional */}
             {txnDetails.initiatorId === userData.userId &&
             txnDetails.status !== 'cancelled' ? (
               <div className="flex justify-center mt-5">
@@ -162,20 +202,7 @@ const TxnPageContent = () => {
               ''
             )}
 
-            {txnDetails.seller?.username !== userData.username &&
-            txnDetails.buyer?.username !== userData.username ? (
-              <div className="flex justify-center mt-5">
-                <button
-                  onClick={joinTransaction}
-                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-                >
-                  Join Transaction
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
-
+            {/* Condtional to show cancelled transactions */}
             {txnDetails.status === 'cancelled' ? (
               <h2 className="font-bold text-center text-xl mt-5">
                 {' '}
