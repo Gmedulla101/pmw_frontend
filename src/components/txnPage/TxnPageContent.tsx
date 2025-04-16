@@ -34,21 +34,28 @@ export type TxnDetails = {
 };
 
 const TxnPageContent = () => {
-  const { id: txnId } = useParams();
-  const location = useLocation();
-  const { userData } = useGlobalUserContext();
-  const [isModal, setIsModal] = useState<boolean>(false);
-
   const {
     txnDetails,
     fetchTxnDetails,
     joinTransaction,
     cancelTxn,
     makePayment,
+    verifyPayment,
   } = useTxns();
+
+  const location = useLocation();
+  const queryParams = new URLSearchParams(location.search);
+  const paymentRef = queryParams.get('trxref');
+
+  const { id: txnId } = useParams();
+  const { userData } = useGlobalUserContext();
+  const [isModal, setIsModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTxnDetails(txnId);
+    if (paymentRef) {
+      verifyPayment(paymentRef);
+    }
   }, [location.key]);
 
   return (
@@ -140,7 +147,8 @@ const TxnPageContent = () => {
           {/* SECTION FOR USER ACTIONS, MULTIPLE BUTTONS WHICH SHOW BASED ON VARYING CONDITION */}
           <section className="mb-12">
             {/* Invite a partner conditional */}
-            {!txnDetails.invitationSent ? (
+            {!txnDetails.invitationSent &&
+            txnDetails.initiatorId === userData.userId ? (
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => {
@@ -160,7 +168,9 @@ const TxnPageContent = () => {
             txnDetails.buyer?.username === userData.username ? (
               <div className="flex justify-center mt-5">
                 <button
-                  onClick={makePayment}
+                  onClick={() => {
+                    makePayment(txnId);
+                  }}
                   className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
                 >
                   Make payment

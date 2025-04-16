@@ -6,6 +6,13 @@ import { useNavigate } from 'react-router';
 import { API } from './useAuth';
 import { useGlobalUserContext } from '../context/UserContext';
 import { TxnDetails } from '../components/txnPage/TxnPageContent';
+export type CreateTxnDetails = {
+  userRole: string;
+  txnItem: string;
+  txnItemCategory: string;
+  txnItemValue: string;
+  txnItemDescription: string;
+};
 
 const useTxns = () => {
   const [txnDetails, setTxnDetails] = useState<TxnDetails>();
@@ -14,11 +21,11 @@ const useTxns = () => {
   const navigate = useNavigate();
 
   //FUNCTIONALITY TO CREATE TRANSACTIONS
-  const createTxn = async () => {
+  const createTxn = async (createTxnDetails: CreateTxnDetails) => {
     try {
       const response = await axios.post(
         `${API}/txn/create-transaction`,
-        txnDetails,
+        createTxnDetails,
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -94,7 +101,10 @@ const useTxns = () => {
           },
         }
       );
-      navigate(`/transaction/${txnDetails?.id}`);
+      toast.success("You've joined the transaction!");
+      setTimeout(() => {
+        navigate(`/transaction/${txnDetails?.id}`);
+      }, 1500);
     } catch (error: any) {
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
@@ -105,8 +115,49 @@ const useTxns = () => {
   };
 
   //FUNCTIONALITY FOR MAKING PAYMENTS
-  const makePayment = () => {
-    console.log('paid');
+  const makePayment = async (txnId: string | undefined) => {
+    try {
+      const response = await axios.post(
+        `${API}/txn/make-payment/${txnId}`,
+        {},
+        {
+          headers: {
+            Authorization: `Bearer ${userToken}`,
+          },
+        }
+      );
+      const { authorization_url } = response.data.data;
+      window.location.href = authorization_url;
+    } catch (error: any) {
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
+    }
+  };
+
+  const verifyPayment = async (txnRef: string) => {
+    try {
+      await axios.get(`${API}/txn/verify-payment/${txnRef}`, {
+        headers: {
+          Authorization: `Bearer ${userToken}`,
+        },
+      });
+
+      const txnId = txnRef.split('_')[1];
+
+      toast.success('Payment verified!.');
+      setTimeout(() => {
+        navigate(`/transaction/${txnId}`);
+      }, 1500);
+    } catch (error: any) {
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
+    }
   };
 
   return {
@@ -116,6 +167,7 @@ const useTxns = () => {
     makePayment,
     createTxn,
     cancelTxn,
+    verifyPayment,
   };
 };
 

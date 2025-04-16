@@ -1,11 +1,12 @@
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useTxns from '../hooks/useTxns';
+import { CreateTxnDetails } from '../hooks/useTxns';
 
 const CreateTxn = () => {
   const { createTxn } = useTxns();
 
-  const [txnDetails, setTxnDetails] = useState({
+  const [txnDetails, setTxnDetails] = useState<CreateTxnDetails>({
     userRole: '',
     txnItem: '',
     txnItemCategory: '',
@@ -112,7 +113,9 @@ const CreateTxn = () => {
 
         <div className="flex justify-center mt-10">
           <button
-            onClick={createTxn}
+            onClick={() => {
+              createTxn(txnDetails);
+            }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
             Create transaction
