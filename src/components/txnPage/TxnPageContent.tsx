@@ -9,7 +9,7 @@ import useTxns from '../../hooks/useTxns';
 import { createPortal } from 'react-dom';
 
 //TYPES, ASSETS, COMPONENTS AND MODALS
-import InvitationModal from '../InvitationModal';
+import InvitationModal from '../modals/InvitationModal';
 import LoaderComponent from '../LoaderComponent';
 import greenBtn from '../../assets/greenButton.png';
 import yellowBtn from '../../assets/yellowButton.png';
@@ -50,7 +50,7 @@ const TxnPageContent = () => {
 
   const { id: txnId } = useParams();
   const { userData } = useGlobalUserContext();
-  const [isModal, setIsModal] = useState<boolean>(false);
+  const [isInvitationModal, setIsInvitationModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTxnDetails(txnId);
@@ -159,7 +159,7 @@ const TxnPageContent = () => {
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => {
-                    setIsModal(true);
+                    setIsInvitationModal(true);
                   }}
                   className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
                 >
@@ -246,7 +246,16 @@ const TxnPageContent = () => {
             )}
           </section>
 
-          {isModal ? createPortal(<InvitationModal />, document.body) : null}
+          {isInvitationModal
+            ? createPortal(
+                <InvitationModal
+                  closeModal={() => {
+                    setIsInvitationModal(false);
+                  }}
+                />,
+                document.body
+              )
+            : null}
         </article>
       )}
     </div>
