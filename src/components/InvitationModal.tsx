@@ -71,6 +71,11 @@ const InvitationModal = () => {
             />
           </div>
 
+          <p className="text-xs mt-2">
+            Click the finish button once you've copied the transaction ID or entered the
+            email
+          </p>
+
           <div className="flex justify-center mt-5">
             <button
               onClick={sendInvite}

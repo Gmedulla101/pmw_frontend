@@ -84,7 +84,7 @@ const useAuth = () => {
 
       setTimeout(() => {
         window.location.href = '/';
-      }, 3000);
+      }, 1500);
     } catch (error: any) {
       if (error.response.data.msg) {
         toast.error(error?.response?.data?.msg);
@@ -112,7 +112,7 @@ const useAuth = () => {
 
       setTimeout(() => {
         window.location.href = '/';
-      }, 3000);
+      }, 1500);
     } catch (error: any) {
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
@@ -131,7 +131,7 @@ const useAuth = () => {
     toast.success('Successfully signed out ');
     setTimeout(() => {
       window.location.href = '/';
-    }, 3000);
+    }, 1500);
   };
 
   const getPasswordResetCode = async () => {

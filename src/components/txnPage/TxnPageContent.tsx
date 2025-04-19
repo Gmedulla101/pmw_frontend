@@ -41,6 +41,7 @@ const TxnPageContent = () => {
     cancelTxn,
     makePayment,
     verifyPayment,
+    deliverGoods,
   } = useTxns();
 
   const location = useLocation();
@@ -130,17 +131,23 @@ const TxnPageContent = () => {
 
             <div className="mt-5 flex justify-between">
               <p> Product:</p>
-              <p>
-                {' '}
-                {txnDetails.productConfirmed
-                  ? 'Delivered'
-                  : 'Not delivered'}{' '}
-              </p>
+              <p> {txnDetails.productConfirmed}</p>
             </div>
 
             <div className="mt-5 flex justify-between">
               <p> Escrow fee:</p>
               <p>#{(txnDetails.txnItemValue * 0.02).toLocaleString()}</p>
+            </div>
+
+            <div className="mt-5 flex justify-between">
+              <p> Total:</p>
+              <p>
+                #
+                {(
+                  txnDetails.txnItemValue * 0.02 +
+                  txnDetails.txnItemValue
+                ).toLocaleString()}
+              </p>
             </div>
           </section>
 
@@ -165,7 +172,8 @@ const TxnPageContent = () => {
 
             {/* Payment conditional */}
             {!txnDetails.cashConfirmed &&
-            txnDetails.buyer?.username === userData.username ? (
+            txnDetails.buyer?.username === userData.username &&
+            txnDetails.invitationSent ? (
               <div className="flex justify-center mt-5">
                 <button
                   onClick={() => {
@@ -189,6 +197,21 @@ const TxnPageContent = () => {
                   className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
                 >
                   Join Transaction
+                </button>
+              </div>
+            ) : (
+              ''
+            )}
+
+            {/* Deliver product conditional */}
+            {txnDetails.seller?.username === userData?.username &&
+            txnDetails.cashConfirmed ? (
+              <div className="flex justify-center mt-5">
+                <button
+                  onClick={deliverGoods}
+                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+                >
+                  Deliver goods/service
                 </button>
               </div>
             ) : (

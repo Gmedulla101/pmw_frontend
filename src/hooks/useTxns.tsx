@@ -160,6 +160,9 @@ const useTxns = () => {
     }
   };
 
+  const deliverGoods = async () => {
+    console.log('delivered');
+  };
   return {
     fetchTxnDetails,
     txnDetails,
@@ -168,6 +171,7 @@ const useTxns = () => {
     createTxn,
     cancelTxn,
     verifyPayment,
+    deliverGoods,
   };
 };
 
