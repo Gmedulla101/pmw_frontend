@@ -78,7 +78,7 @@ const useTxns = () => {
       );
       toast.success('Transaction cancelled');
       setTimeout(() => {
-        navigate(-1);
+        navigate(`/transaction/${txnId}`);
       }, 1500);
     } catch (error: any) {
       if (error?.response?.data?.msg) {

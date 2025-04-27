@@ -76,7 +76,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                           {data.status === 'pending' ? (
                             <img className="w-2" src={yellowBtn} />
                           ) : null}
-                          {data.status === 'confirmed' ? (
+                          {data.status === 'completed' ? (
                             <img className="w-2" src={greenBtn} />
                           ) : null}
                           {data.status === 'cancelled' ? (

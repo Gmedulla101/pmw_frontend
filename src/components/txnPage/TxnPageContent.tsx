@@ -4,17 +4,26 @@ import { useParams, useLocation } from 'react-router';
 import { ToastContainer } from 'react-toastify';
 
 //IMPORTING HOOKS
-import { useGlobalUserContext } from '../../context/UserContext';
 import useTxns from '../../hooks/useTxns';
 import { createPortal } from 'react-dom';
 
 //TYPES, ASSETS, COMPONENTS AND MODALS
 import InvitationModal from '../modals/InvitationModal';
+import DeliveryModal from '../modals/DeliveryModal';
+import ProductConfirmedModal from '../modals/ProductConfirmedModal';
 import LoaderComponent from '../LoaderComponent';
 import greenBtn from '../../assets/greenButton.png';
 import yellowBtn from '../../assets/yellowButton.png';
 import redBtn from '../../assets/redButton.png';
-import DeliveryModal from '../modals/DeliveryModal';
+//BUTTONS
+import {
+  InviteTransactionPartner,
+  JoinTransaction,
+  MakePayment,
+  DeliverGoods,
+  CancelTransaction,
+  ConfirmDelivery,
+} from '../txnPageButtons/TxnButtons';
 
 export type TxnDetails = {
   buyerId: string | null;
@@ -23,7 +32,7 @@ export type TxnDetails = {
   productConfirmed: boolean;
   productDelivered: boolean;
   sellerId: string | null;
-  status: 'pending' | 'confirmed' | 'cancelled';
+  status: 'pending' | 'completed' | 'cancelled';
   txnItem: string;
   txnItemCategoryId: string;
   txnItemDescription: string;
@@ -36,23 +45,17 @@ export type TxnDetails = {
 };
 
 const TxnPageContent = () => {
-  const {
-    txnDetails,
-    fetchTxnDetails,
-    joinTransaction,
-    cancelTxn,
-    makePayment,
-    verifyPayment,
-  } = useTxns();
+  const { txnDetails, fetchTxnDetails, verifyPayment } = useTxns();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
   const paymentRef = queryParams.get('trxref');
 
   const { id: txnId } = useParams();
-  const { userData } = useGlobalUserContext();
   const [isInvitationModal, setIsInvitationModal] = useState<boolean>(false);
   const [isDeliveryModal, setIsDeliveryModal] = useState<boolean>(false);
+  const [isProductConfirmedModal, setIsProductConfirmedModal] =
+    useState<boolean>(false);
 
   useEffect(() => {
     fetchTxnDetails(txnId);
@@ -90,7 +93,7 @@ const TxnPageContent = () => {
               ) : (
                 ''
               )}
-              {txnDetails.status === 'confirmed' ? (
+              {txnDetails.status === 'completed' ? (
                 <img className="w-4" src={greenBtn} />
               ) : (
                 ''
@@ -180,89 +183,34 @@ const TxnPageContent = () => {
 
             {/* BUTTONS */}
             {/* Invite a partner conditional */}
-            {!txnDetails.invitationSent &&
-            txnDetails.initiatorId === userData.userId ? (
-              <div className="flex justify-center mt-5">
-                <button
-                  onClick={() => {
-                    setIsInvitationModal(true);
-                  }}
-                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-                >
-                  Invite transaction partner
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
-
-            {/* Payment conditional */}
-            {!txnDetails.cashConfirmed &&
-            txnDetails.buyer?.username === userData.username &&
-            txnDetails.invitationSent ? (
-              <div className="flex justify-center mt-5">
-                <button
-                  onClick={() => {
-                    makePayment(txnId);
-                  }}
-                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-                >
-                  Make payment
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
+            <InviteTransactionPartner
+              txnDetails={txnDetails}
+              setIsInvitationModal={setIsInvitationModal}
+            />
 
             {/* Join transaction conditional */}
-            {txnDetails.seller?.username !== userData.username &&
-            txnDetails.buyer?.username !== userData.username ? (
-              <div className="flex justify-center mt-5">
-                <button
-                  onClick={joinTransaction}
-                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-                >
-                  Join Transaction
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
+            <JoinTransaction txnDetails={txnDetails} />
+
+            {/* Payment conditional */}
+            <MakePayment txnDetails={txnDetails} />
 
             {/* Deliver product conditional */}
-            {txnDetails.seller?.username === userData?.username &&
-            txnDetails.cashConfirmed &&
-            !txnDetails.productDelivered ? (
-              <div className="flex justify-center mt-5">
-                <button
-                  onClick={() => {
-                    setIsDeliveryModal(true);
-                  }}
-                  className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-                >
-                  Deliver goods/service
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
+            <DeliverGoods
+              txnDetails={txnDetails}
+              setIsDeliveryModal={setIsDeliveryModal}
+            />
+
+            {/* Confirm product delivery */}
+            <ConfirmDelivery
+              txnDetails={txnDetails}
+              setIsProductConfirmedModal={setIsProductConfirmedModal}
+            />
 
             {/* Cancel transaction conditional */}
-            {txnDetails.initiatorId === userData.userId &&
-            txnDetails.status !== 'cancelled' ? (
-              <div className="flex justify-center mt-5">
-                <button
-                  onClick={() => {
-                    cancelTxn(txnId);
-                  }}
-                  className="px-2 py-4 transition bg-red-500 text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-                >
-                  Cancel transaction
-                </button>
-              </div>
-            ) : (
-              ''
-            )}
+            <CancelTransaction txnDetails={txnDetails} />
+
+            {/* Request payment */}
+            
 
             {/* Condtional to show cancelled transactions */}
             {txnDetails.status === 'cancelled' ? (
@@ -293,6 +241,18 @@ const TxnPageContent = () => {
                 <DeliveryModal
                   closeModal={() => {
                     setIsDeliveryModal(false);
+                  }}
+                />,
+                document.body
+              )
+            : null}
+
+          {/* PRODUCT CONFIRMATION MODAL */}
+          {isProductConfirmedModal
+            ? createPortal(
+                <ProductConfirmedModal
+                  closeModal={() => {
+                    setIsProductConfirmedModal(false);
                   }}
                 />,
                 document.body
