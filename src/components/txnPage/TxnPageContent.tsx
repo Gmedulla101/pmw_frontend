@@ -14,12 +14,14 @@ import LoaderComponent from '../LoaderComponent';
 import greenBtn from '../../assets/greenButton.png';
 import yellowBtn from '../../assets/yellowButton.png';
 import redBtn from '../../assets/redButton.png';
+import DeliveryModal from '../modals/DeliveryModal';
 
 export type TxnDetails = {
   buyerId: string | null;
   cashConfirmed: boolean;
   id: string;
   productConfirmed: boolean;
+  productDelivered: boolean;
   sellerId: string | null;
   status: 'pending' | 'confirmed' | 'cancelled';
   txnItem: string;
@@ -41,7 +43,6 @@ const TxnPageContent = () => {
     cancelTxn,
     makePayment,
     verifyPayment,
-    deliverGoods,
   } = useTxns();
 
   const location = useLocation();
@@ -51,6 +52,7 @@ const TxnPageContent = () => {
   const { id: txnId } = useParams();
   const { userData } = useGlobalUserContext();
   const [isInvitationModal, setIsInvitationModal] = useState<boolean>(false);
+  const [isDeliveryModal, setIsDeliveryModal] = useState<boolean>(false);
 
   useEffect(() => {
     fetchTxnDetails(txnId);
@@ -130,8 +132,16 @@ const TxnPageContent = () => {
             </div>
 
             <div className="mt-5 flex justify-between">
-              <p> Product:</p>
-              <p> {txnDetails.productConfirmed}</p>
+              <p> Product delivery:</p>
+              <p> {txnDetails.productDelivered ? 'Delivered' : 'Pending'}</p>
+            </div>
+
+            <div className="mt-5 flex justify-between">
+              <p> Product confirmation:</p>
+              <p>
+                {' '}
+                {txnDetails.productConfirmed ? 'Confirmed by buyer' : 'Pending'}
+              </p>
             </div>
 
             <div className="mt-5 flex justify-between">
@@ -153,6 +163,22 @@ const TxnPageContent = () => {
 
           {/* SECTION FOR USER ACTIONS, MULTIPLE BUTTONS WHICH SHOW BASED ON VARYING CONDITION */}
           <section className="mb-12">
+            {/* PARAGRAPHS */}
+            {txnDetails.productDelivered && !txnDetails.productConfirmed ? (
+              <p className="mt-5">
+                {' '}
+                The product has been delivered, waiting on product confirmation
+                from the buyer{' '}
+              </p>
+            ) : (
+              <p>
+                {' '}
+                The product has been confirmed, payment will be processed
+                immediately{' '}
+              </p>
+            )}
+
+            {/* BUTTONS */}
             {/* Invite a partner conditional */}
             {!txnDetails.invitationSent &&
             txnDetails.initiatorId === userData.userId ? (
@@ -205,10 +231,13 @@ const TxnPageContent = () => {
 
             {/* Deliver product conditional */}
             {txnDetails.seller?.username === userData?.username &&
-            txnDetails.cashConfirmed ? (
+            txnDetails.cashConfirmed &&
+            !txnDetails.productDelivered ? (
               <div className="flex justify-center mt-5">
                 <button
-                  onClick={deliverGoods}
+                  onClick={() => {
+                    setIsDeliveryModal(true);
+                  }}
                   className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
                 >
                   Deliver goods/service
@@ -246,11 +275,24 @@ const TxnPageContent = () => {
             )}
           </section>
 
+          {/* INVITATION MODAL  */}
           {isInvitationModal
             ? createPortal(
                 <InvitationModal
                   closeModal={() => {
                     setIsInvitationModal(false);
+                  }}
+                />,
+                document.body
+              )
+            : null}
+
+          {/* DELIVERY MODAL */}
+          {isDeliveryModal
+            ? createPortal(
+                <DeliveryModal
+                  closeModal={() => {
+                    setIsDeliveryModal(false);
                   }}
                 />,
                 document.body
