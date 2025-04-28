@@ -160,6 +160,10 @@ const useTxns = () => {
     }
   };
 
+  const requestPayment = () => {
+    navigate('/payment-request');
+  };
+
   const deliverGoods = async () => {
     console.log('delivered');
   };
@@ -172,6 +176,7 @@ const useTxns = () => {
     cancelTxn,
     verifyPayment,
     deliverGoods,
+    requestPayment,
   };
 };
 

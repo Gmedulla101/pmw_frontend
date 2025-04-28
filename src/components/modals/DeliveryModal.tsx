@@ -31,7 +31,7 @@ const DeliveryModal = ({ closeModal }: { closeModal: any }) => {
       toast.success('Delivery processing!');
 
       setTimeout(() => {
-        closeModal();
+        window.location.href = `/transaction/${txnId}`;
       }, 1500);
     } catch (error) {
       console.log(error);

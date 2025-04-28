@@ -20,7 +20,7 @@ const ProductConfirmedModal = ({ closeModal }: { closeModal: any }) => {
       }
       await axios.put(
         `${API}/txn/update-transaction/${txnId}`,
-        { productConfirmed: true, status: 'completed' },
+        { productConfirmed: true },
         {
           headers: {
             Authorization: `Bearer ${userToken}`,
@@ -31,7 +31,7 @@ const ProductConfirmedModal = ({ closeModal }: { closeModal: any }) => {
       toast.success('Delivery confirmed!');
 
       setTimeout(() => {
-        closeModal();
+        window.location.href = `/transaction/${txnId}`;
       }, 1500);
     } catch (error) {
       console.log(error);

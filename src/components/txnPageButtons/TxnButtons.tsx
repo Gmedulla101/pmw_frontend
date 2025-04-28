@@ -122,6 +122,7 @@ export const ConfirmDelivery = ({
   return (
     <div>
       {txnDetails.buyer?.username === userData?.username &&
+      !txnDetails.productConfirmed &&
       txnDetails.productDelivered ? (
         <div className="flex justify-center mt-5">
           <button
@@ -131,6 +132,28 @@ export const ConfirmDelivery = ({
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
             Confirm product delivery
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
+
+export const RequestPayment = ({ txnDetails }: { txnDetails: TxnDetails }) => {
+  const { userData } = useGlobalUserContext();
+  const { requestPayment } = useTxns();
+  return (
+    <div>
+      {txnDetails.seller?.username === userData?.username &&
+      txnDetails.productConfirmed ? (
+        <div className="flex justify-center mt-5">
+          <button
+            onClick={requestPayment}
+            className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+          >
+            Request payment
           </button>
         </div>
       ) : (

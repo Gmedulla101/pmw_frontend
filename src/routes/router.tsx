@@ -10,6 +10,7 @@ import CreateTxn from '../pages/CreateTxn';
 import TxnPage from '../pages/TxnPage';
 import JoinTxn from '../pages/JoinTxn';
 import ForgotPassword from '../pages/pswd_reset_flow/ForgotPassword';
+import RequestPayment from '../pages/pswd_reset_flow/RequestPayment';
 
 const router = createBrowserRouter([
   {
@@ -47,6 +48,10 @@ const router = createBrowserRouter([
       {
         path: '/forgot-password',
         element: <ForgotPassword />,
+      },
+      {
+        path: '/payment-request',
+        element: <RequestPayment />,
       },
     ],
   },

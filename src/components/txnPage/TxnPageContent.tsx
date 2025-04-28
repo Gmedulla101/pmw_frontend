@@ -23,6 +23,7 @@ import {
   DeliverGoods,
   CancelTransaction,
   ConfirmDelivery,
+  RequestPayment,
 } from '../txnPageButtons/TxnButtons';
 
 export type TxnDetails = {
@@ -167,18 +168,22 @@ const TxnPageContent = () => {
           {/* SECTION FOR USER ACTIONS, MULTIPLE BUTTONS WHICH SHOW BASED ON VARYING CONDITION */}
           <section className="mb-12">
             {/* PARAGRAPHS */}
-            {txnDetails.productDelivered && !txnDetails.productConfirmed ? (
+            {txnDetails.productDelivered ? (
               <p className="mt-5">
                 {' '}
-                The product has been delivered, waiting on product confirmation
-                from the buyer{' '}
+                The product has been delivered!{' '}
               </p>
             ) : (
-              <p>
+              <p className="mt-5 italic"> Waiting on product delivery </p>
+            )}
+
+            {txnDetails.productConfirmed ? (
+              <p className="mt-5">
                 {' '}
-                The product has been confirmed, payment will be processed
-                immediately{' '}
+                The product has been confirmed, seller can now request payment
               </p>
+            ) : (
+              ''
             )}
 
             {/* BUTTONS */}
@@ -210,7 +215,7 @@ const TxnPageContent = () => {
             <CancelTransaction txnDetails={txnDetails} />
 
             {/* Request payment */}
-            
+            <RequestPayment txnDetails={txnDetails} />
 
             {/* Condtional to show cancelled transactions */}
             {txnDetails.status === 'cancelled' ? (
