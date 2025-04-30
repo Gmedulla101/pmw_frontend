@@ -141,19 +141,52 @@ export const ConfirmDelivery = ({
   );
 };
 
-export const RequestPayment = ({ txnDetails }: { txnDetails: TxnDetails }) => {
+export const RequestPaymentBtn = ({
+  txnDetails,
+}: {
+  txnDetails: TxnDetails | undefined;
+}) => {
   const { userData } = useGlobalUserContext();
   const { requestPayment } = useTxns();
   return (
     <div>
-      {txnDetails.seller?.username === userData?.username &&
-      txnDetails.productConfirmed ? (
+      {txnDetails?.seller?.username === userData?.username &&
+      txnDetails?.productConfirmed ? (
         <div className="flex justify-center mt-5">
           <button
-            onClick={requestPayment}
+            onClick={() => {
+              requestPayment(txnDetails.id);
+            }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
             Request payment
+          </button>
+        </div>
+      ) : (
+        ''
+      )}
+    </div>
+  );
+};
+export const PaymentProcessing = ({
+  txnDetails,
+}: {
+  txnDetails: TxnDetails | undefined;
+}) => {
+  const { userData } = useGlobalUserContext();
+  const { requestPayment } = useTxns();
+  return (
+    <div>
+      {txnDetails?.seller?.username === userData?.username &&
+      txnDetails?.productConfirmed ? (
+        <div className="flex justify-center mt-1">
+          <button
+            onClick={() => {
+              requestPayment(txnDetails.id);
+            }}
+            className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-[80%]"
+          >
+            Process payment
           </button>
         </div>
       ) : (

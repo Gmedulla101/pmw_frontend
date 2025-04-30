@@ -160,8 +160,8 @@ const useTxns = () => {
     }
   };
 
-  const requestPayment = () => {
-    navigate('/payment-request');
+  const requestPayment = (txnId: string) => {
+    navigate(`/payment-request/${txnId}`);
   };
 
   const deliverGoods = async () => {
