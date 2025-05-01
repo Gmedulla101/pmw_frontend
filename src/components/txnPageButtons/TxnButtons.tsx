@@ -1,6 +1,7 @@
 import { TxnDetails } from '../txnPage/TxnPageContent';
 import { useGlobalUserContext } from '../../context/UserContext';
 import useTxns from '../../hooks/useTxns';
+import useReqPay from '../../hooks/useReqPay';
 
 export const InviteTransactionPartner = ({
   txnDetails,
@@ -168,13 +169,16 @@ export const RequestPaymentBtn = ({
     </div>
   );
 };
+
 export const PaymentProcessing = ({
   txnDetails,
+  accountNumber,
 }: {
   txnDetails: TxnDetails | undefined;
+  accountNumber: string;
 }) => {
   const { userData } = useGlobalUserContext();
-  const { requestPayment } = useTxns();
+  const { collectPayment } = useReqPay();
   return (
     <div>
       {txnDetails?.seller?.username === userData?.username &&
@@ -182,7 +186,7 @@ export const PaymentProcessing = ({
         <div className="flex justify-center mt-1">
           <button
             onClick={() => {
-              requestPayment(txnDetails.id);
+              collectPayment(txnDetails.id, accountNumber);
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-[80%]"
           >

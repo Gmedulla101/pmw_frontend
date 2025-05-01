@@ -14,10 +14,11 @@ import { ToastContainer } from 'react-toastify';
 import { PaymentProcessing } from '../components/txnPageButtons/TxnButtons';
 
 const RequestPayment = () => {
-  const { fetchBankData } = useReqPay();
+  const [accountNumber, setAccountNumber] = useState('');
+
+  const { fetchBankData, resolveAccount, accountName } = useReqPay();
   const { txnDetails, fetchTxnDetails } = useTxns();
   const { txnId } = useParams();
-  console.log(txnId);
 
   const dispatch = useDispatch<AppDispatch>();
   const { bankData, form } = useSelector(
@@ -29,7 +30,18 @@ const RequestPayment = () => {
     fetchTxnDetails(txnId);
   }, []);
 
-  console.log(form);
+  useEffect(() => {
+    const delayDebounce = setTimeout(() => {
+      if (accountNumber.length === 10) {
+        resolveAccount(String(accountNumber), form.bank_code);
+        dispatch(
+          handlePaymentForm({ name: 'account_number', value: accountNumber })
+        );
+      }
+    }, 500);
+
+    return () => clearTimeout(delayDebounce);
+  }, [accountNumber]);
 
   return (
     <main>
@@ -44,21 +56,24 @@ const RequestPayment = () => {
           <BankOptions bankData={bankData} />
         </div>
 
-        <div className="flex items-center w-[80%] mx-auto">
+        <div className="w-[80%] mx-auto">
           <input
             type="number"
             name="account_number"
             placeholder="Account number"
             onChange={(e: any) => {
-              dispatch(
-                handlePaymentForm({
-                  name: e.target.name,
-                  value: e.target.value,
-                })
-              );
+              setAccountNumber(e.target.value);
             }}
+            value={accountNumber}
             className="border-2 border-gray-400 text-center text-lg w-full py-2 rounded-lg"
           />
+          <div className="w-[80%] mt-1">
+            {accountName && accountNumber.length === 10 ? (
+              accountName
+            ) : (
+              <span className="loading loading-dots w-6"></span>
+            )}
+          </div>
         </div>
 
         <div>
@@ -73,7 +88,10 @@ const RequestPayment = () => {
         </div>
 
         <div>
-          <PaymentProcessing txnDetails={txnDetails} />
+          <PaymentProcessing
+            txnDetails={txnDetails}
+            accountNumber={accountNumber}
+          />
         </div>
       </section>
     </main>

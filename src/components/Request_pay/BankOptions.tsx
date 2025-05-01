@@ -27,7 +27,18 @@ const BankOptions = ({ bankData }: { bankData: any }) => {
 
   const selectBank = (value: string) => {
     setSelectedBank(value);
+
+    const selectedBankArray = bankData.filter((data: any) => {
+      return data.name === value;
+    });
+
     setMatchingBanks([]);
+    dispatch(
+      handlePaymentForm({
+        name: 'bank_code',
+        value: selectedBankArray[0]?.code,
+      })
+    );
     dispatch(handlePaymentForm({ name: 'bank', value }));
     setFilter('');
   };
