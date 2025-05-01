@@ -18,7 +18,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
     <>
       {tableData.length < 1 ? (
         <h1 className="text-center font-semibold text-xl md:text-2xl">
-          You haven't created any transactions{' '}
+          You haven't started any transactions{' '}
         </h1>
       ) : (
         <section className="overflow-x-scroll rounded-t-2xl">
@@ -46,7 +46,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                       >
                         <td className="w-1/2 h-[30px] text-xs bg-black text-white rounded-lg transition hover:scale-110 flex justify-center items-center">
                           {' '}
-                          <Link to={`/transactions/${data.id}`}>
+                          <Link to={`/transaction/${data.id}`}>
                             {' '}
                             Details{' '}
                           </Link>{' '}
@@ -76,10 +76,10 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                           {data.status === 'pending' ? (
                             <img className="w-2" src={yellowBtn} />
                           ) : null}
-                          {data.status === 'confirmed' ? (
+                          {data.status === 'completed' ? (
                             <img className="w-2" src={greenBtn} />
                           ) : null}
-                          {data.status === 'canceled' ? (
+                          {data.status === 'cancelled' ? (
                             <img className="w-2" src={redBtn} />
                           ) : null}
                           {data.status}

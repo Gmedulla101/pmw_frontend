@@ -1,12 +1,13 @@
 import { useState } from 'react';
 import { useParams } from 'react-router';
 import axios from 'axios';
-import { useGlobalUserContext } from '../context/UserContext';
-import { API } from '../hooks/useAuth';
+import { useGlobalUserContext } from '../../context/UserContext';
+import { API } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
+import close from '../../assets/close.png';
 
-const InvitationModal = () => {
+const InvitationModal = ({ closeModal }: { closeModal: any }) => {
   const { userToken } = useGlobalUserContext();
   const { id: txnId } = useParams();
   const navigate = useNavigate();
@@ -38,9 +39,17 @@ const InvitationModal = () => {
   return (
     <aside className="h-[100vh] w-[100vw] fixed top-0 shadow">
       <ToastContainer />
-      <article className="relative z-[100] flex justify-center top-50">
+      <article className="relative mx-auto w-[90vw] z-[100] flex justify-center top-35">
         {' '}
-        <section className="bg-white shadow p-4 rounded-lg z-[101]">
+        <section className="bg-white shadow pt-2 pb-5 px-4 rounded-lg z-[101]">
+          <div className="flex justify-end">
+            <img
+              src={close}
+              alt=""
+              onClick={closeModal}
+              className="w-10 cursor-pointer rounded-full p-2 hover:bg-gray-200 active:bg-gray-400"
+            />
+          </div>
           <h1 className="font-semibold text-2xl lg:text-3xl text-center">
             {' '}
             Invite a transaction partner
@@ -70,6 +79,11 @@ const InvitationModal = () => {
               }}
             />
           </div>
+
+          <p className="text-xs mt-2">
+            Click the finish button once you've copied the transaction ID or
+            entered the email
+          </p>
 
           <div className="flex justify-center mt-5">
             <button

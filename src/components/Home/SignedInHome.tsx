@@ -1,5 +1,5 @@
 import { useEffect } from 'react';
-import { Link } from 'react-router';
+import { Link, useLocation } from 'react-router';
 
 //IMPORTING HELPER COMPONENTS AND ASSETS
 import TxnInfoBox from './TxnInfoBox';
@@ -12,10 +12,11 @@ import useFetchHomeData from '../../hooks/useFetchHomeData';
 
 const SignedInHome = () => {
   const { tableData, fetchData } = useFetchHomeData();
+  const location = useLocation();
 
   useEffect(() => {
     fetchData();
-  }, []);
+  }, [location.key]);
 
   return (
     <>

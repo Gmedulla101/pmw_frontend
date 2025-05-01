@@ -2,59 +2,14 @@
 import LoaderComponent from '../components/LoaderComponent';
 
 //IMPORTING DEPS AND HOOKS
-import { API } from '../hooks/useAuth';
-import axios from 'axios';
 import { useState } from 'react';
-import { useGlobalUserContext } from '../context/UserContext';
-import { TxnDetails } from './TxnPage';
-import { ToastContainer, toast } from 'react-toastify';
-import { useNavigate } from 'react-router';
+import { ToastContainer } from 'react-toastify';
+import useTxns from '../hooks/useTxns';
 
 const JoinTxn = () => {
-  const navigate = useNavigate();
-
   const [id, setId] = useState<string>('');
-  const { userToken } = useGlobalUserContext();
-  const [txnDetails, setTxnDetails] = useState<TxnDetails>();
 
-  const fetchTxnDetails = async () => {
-    try {
-      const response = await axios.get(`${API}/txn/get-transaction/${id}`, {
-        headers: {
-          Authorization: `Bearer ${userToken}`,
-        },
-      });
-
-      setTxnDetails(response.data.txn);
-    } catch (error: any) {
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  };
-
-  const joinTransaction = async () => {
-    try {
-      await axios.patch(
-        `${API}/txn/join-transaction/${txnDetails?.id}`,
-        {},
-        {
-          headers: {
-            Authorization: `Bearer ${userToken}`,
-          },
-        }
-      );
-      navigate(`/transaction/${txnDetails?.id}`);
-    } catch (error: any) {
-      if (error?.response?.data?.msg) {
-        toast.error(error?.response?.data?.msg);
-      } else {
-        toast.error(error.message);
-      }
-    }
-  };
+  const { fetchTxnDetails, txnDetails, joinTransaction } = useTxns();
 
   return (
     <main className="px-5 md:px-10 mt-8">
@@ -80,7 +35,9 @@ const JoinTxn = () => {
           />
           <div className="flex justify-center">
             <button
-              onClick={fetchTxnDetails}
+              onClick={() => {
+                fetchTxnDetails(id);
+              }}
               className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
             >
               Search
