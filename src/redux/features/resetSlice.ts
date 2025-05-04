@@ -5,7 +5,6 @@ const initialState = {
   code: undefined,
   password: '',
   confirmPassword: '',
-  isLoading: false,
 };
 
 const resetSlice = createSlice({
@@ -16,13 +15,10 @@ const resetSlice = createSlice({
       const { name, value } = action.payload;
       state[name] = value;
     },
-    setIsLoading: (state: any, action) => {
-      state.isLoading = action.payload;
-    },
   },
 });
 
-export const { handleChange, setIsLoading } = resetSlice.actions;
+export const { handleChange } = resetSlice.actions;
 
 const resetReducer = resetSlice.reducer;
 

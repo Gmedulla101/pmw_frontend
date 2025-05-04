@@ -18,7 +18,7 @@ const SignIn = () => {
     );
   };
 
-  const { handleLogin } = useAuth();
+  const { handleLogin, isLoading } = useAuth();
 
   return (
     <main>
@@ -69,7 +69,11 @@ const SignIn = () => {
           id="signup"
           className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-8"
         >
-          <p>Log in</p>
+          {isLoading ? (
+            <span className="loading loading-dots loading-lg"></span>
+          ) : (
+            <p>Log in</p>
+          )}
         </button>
       </section>
     </main>

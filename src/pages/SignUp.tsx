@@ -22,7 +22,7 @@ const SignUp = () => {
     );
   };
 
-  const { handleRegister } = useAuth();
+  const { handleRegister, isLoading } = useAuth();
 
   return (
     <main className="px-5 md:px-10">
@@ -100,7 +100,11 @@ const SignUp = () => {
           id="signup"
           className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-10"
         >
-          <p>Sign up</p>
+          {isLoading ? (
+            <span className="loading loading-dots loading-lg"></span>
+          ) : (
+            <p>Sign up</p>
+          )}
         </button>
       </section>
     </main>

@@ -1,17 +1,16 @@
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { RootState, AppDispatch } from '../redux/store';
+import { useSelector } from 'react-redux';
+import { RootState } from '../redux/store';
 import { useGlobalUserContext } from '../context/UserContext';
 import { toast } from 'react-toastify';
-import { setIsLoading } from '../redux/features/resetSlice';
-
 import { useNavigate } from 'react-router';
+import { useState } from 'react';
 
 export const API = import.meta.env.VITE_BASE_API_URL;
 
 const useAuth = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { form } = useSelector((store: RootState) => store.auth);
   const reset = useSelector((store: RootState) => store.reset);
@@ -46,6 +45,10 @@ const useAuth = () => {
     const { firstName, lastName, username, email, password, confirmPassword } =
       form;
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       //EDGE CASES AND VALIDATION
       if (
         !firstName ||
@@ -81,11 +84,12 @@ const useAuth = () => {
       setIsSignedIn(true);
 
       toast.success('User has been registered!');
-
+      setIsLoading(false);
       setTimeout(() => {
         window.location.href = '/';
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error.response.data.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -97,6 +101,10 @@ const useAuth = () => {
   const handleLogin = async () => {
     const { email, password } = form;
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       const response = await axios.post(`${API}/auth/user-login`, {
         email,
         password,
@@ -109,11 +117,12 @@ const useAuth = () => {
       setIsSignedIn(true);
 
       toast.success('User logged in!');
-
+      setIsLoading(false);
       setTimeout(() => {
         window.location.href = '/';
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -123,12 +132,14 @@ const useAuth = () => {
   };
 
   const logOut = () => {
+    setIsLoading(true);
     localStorage.removeItem('pw_token');
     localStorage.removeItem('pw_user');
     setUserData({});
     setIsSignedIn(false);
 
     toast.success('Successfully signed out ');
+    setIsLoading(false);
     setTimeout(() => {
       window.location.href = '/';
     }, 1500);
@@ -137,12 +148,16 @@ const useAuth = () => {
   const getPasswordResetCode = async () => {
     const { email } = reset;
     try {
-      dispatch(setIsLoading(true));
+      if (isLoading) {
+        return;
+      }
+
+      setIsLoading(true);
       await axios.post(`${API}/auth/confirm-email`, { email });
       toast.success('Email confirmed!');
-      dispatch(setIsLoading(false));
+      setIsLoading(false);
     } catch (error: any) {
-      dispatch(setIsLoading(false));
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -154,11 +169,13 @@ const useAuth = () => {
   const resetPassword = async () => {
     const { email, code, password, confirmPassword } = reset;
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       if (!email || !code || !password || !confirmPassword) {
         toast.error('Please fill all fields');
       }
-
-      dispatch(setIsLoading(true));
 
       await axios.post(`${API}/auth/reset-password`, {
         email,
@@ -167,13 +184,13 @@ const useAuth = () => {
       });
 
       toast.success('Password reset successfully!');
-      dispatch(setIsLoading(false));
+      setIsLoading(false);
 
       setTimeout(() => {
         navigate('/sign-in');
       }, 3000);
     } catch (error: any) {
-      dispatch(setIsLoading(false));
+      setIsLoading(false);
       if (error.response.data.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -189,6 +206,7 @@ const useAuth = () => {
     initialiseAuth,
     getPasswordResetCode,
     resetPassword,
+    isLoading,
   };
 };
 

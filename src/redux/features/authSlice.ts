@@ -9,7 +9,6 @@ const initialState = {
     password: '',
     confirmPassword: '',
   },
-  isLoading: false,
   errorMsg: '',
 };
 
@@ -21,9 +20,6 @@ const authSlice = createSlice({
       const { name, value } = action.payload;
       state.form = { ...state.form, [name]: value };
     },
-    setIsLoading: (state, action) => {
-      state.isLoading = action.payload;
-    },
     setErrorMsg: (state, action) => {
       state.errorMsg = action.payload;
     },
@@ -31,4 +27,4 @@ const authSlice = createSlice({
 });
 
 export const authReducer = authSlice.reducer;
-export const { handleForm, setIsLoading, setErrorMsg } = authSlice.actions;
+export const { handleForm, setErrorMsg } = authSlice.actions;

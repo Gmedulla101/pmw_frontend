@@ -8,7 +8,7 @@ import { ToastContainer } from 'react-toastify';
 import useAuth from '../../hooks/useAuth';
 
 const ForgotPassword = () => {
-  const { email, code, password, confirmPassword, isLoading } = useSelector(
+  const { email, code, password, confirmPassword } = useSelector(
     (store: RootState) => store.reset
   );
 
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     );
   };
 
-  const { getPasswordResetCode, resetPassword } = useAuth();
+  const { getPasswordResetCode, resetPassword, isLoading } = useAuth();
 
   return (
     <>
