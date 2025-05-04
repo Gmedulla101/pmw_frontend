@@ -16,6 +16,7 @@ export type CreateTxnDetails = {
 
 const useTxns = () => {
   const [txnDetails, setTxnDetails] = useState<TxnDetails>();
+  const [isLoading, setIsLoading] = useState<boolean>(false);
   const { userToken } = useGlobalUserContext();
 
   const navigate = useNavigate();
@@ -23,6 +24,10 @@ const useTxns = () => {
   //FUNCTIONALITY TO CREATE TRANSACTIONS
   const createTxn = async (createTxnDetails: CreateTxnDetails) => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       const response = await axios.post(
         `${API}/txn/create-transaction`,
         createTxnDetails,
@@ -34,10 +39,12 @@ const useTxns = () => {
       );
 
       toast.success('Transaction created!');
+      setIsLoading(false);
       setTimeout(() => {
         navigate(`/transaction/${response.data.transaction.id}`);
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -49,13 +56,19 @@ const useTxns = () => {
   //FUNCTIONALITY TO FETCH THE TRANSACTION DETAILS ON THE TRANSACTION PAGE.
   const fetchTxnDetails = async (id: string | undefined) => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       const response = await axios.get(`${API}/txn/get-transaction/${id}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
         },
       });
       setTxnDetails(response.data.txn);
+      setIsLoading(false);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -67,6 +80,10 @@ const useTxns = () => {
   //FUNCTIONALITY FOR CANCELLING TRANSACTIONS
   const cancelTxn = async (txnId: string | undefined) => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       await axios.put(
         `${API}/txn/update-transaction/${txnId}`,
         { status: 'cancelled' },
@@ -77,10 +94,12 @@ const useTxns = () => {
         }
       );
       toast.success('Transaction cancelled');
+      setIsLoading(false);
       setTimeout(() => {
         navigate(`/transaction/${txnId}`);
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -92,6 +111,10 @@ const useTxns = () => {
   //FUNCTIONALITY TO JOIN A TRANSACTION
   const joinTransaction = async () => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       await axios.patch(
         `${API}/txn/join-transaction/${txnDetails?.id}`,
         {},
@@ -102,10 +125,12 @@ const useTxns = () => {
         }
       );
       toast.success("You've joined the transaction!");
+      setIsLoading(false);
       setTimeout(() => {
         navigate(`/transaction/${txnDetails?.id}`);
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -117,6 +142,10 @@ const useTxns = () => {
   //FUNCTIONALITY FOR MAKING PAYMENTS
   const makePayment = async (txnId: string | undefined) => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       const response = await axios.post(
         `${API}/txn/make-payment/${txnId}`,
         {},
@@ -127,8 +156,10 @@ const useTxns = () => {
         }
       );
       const { authorization_url } = response.data.data;
+      setIsLoading(false);
       window.location.href = authorization_url;
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -139,6 +170,10 @@ const useTxns = () => {
 
   const verifyPayment = async (txnRef: string) => {
     try {
+      if (isLoading) {
+        return;
+      }
+      setIsLoading(true);
       await axios.get(`${API}/txn/verify-payment/${txnRef}`, {
         headers: {
           Authorization: `Bearer ${userToken}`,
@@ -148,10 +183,12 @@ const useTxns = () => {
       const txnId = txnRef.split('_')[1];
 
       toast.success('Payment verified!.');
+      setIsLoading(false);
       setTimeout(() => {
         navigate(`/transaction/${txnId}`);
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -177,6 +214,7 @@ const useTxns = () => {
     verifyPayment,
     deliverGoods,
     requestPayment,
+    isLoading,
   };
 };
 

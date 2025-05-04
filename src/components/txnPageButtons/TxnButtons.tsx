@@ -6,9 +6,11 @@ import useReqPay from '../../hooks/useReqPay';
 export const InviteTransactionPartner = ({
   txnDetails,
   setIsInvitationModal,
+  isLoading,
 }: {
   txnDetails: TxnDetails;
   setIsInvitationModal: Function;
+  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
   return (
@@ -22,7 +24,11 @@ export const InviteTransactionPartner = ({
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Invite transaction partner
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              ' Invite transaction partner'
+            )}
           </button>
         </div>
       ) : (
@@ -32,7 +38,13 @@ export const InviteTransactionPartner = ({
   );
 };
 
-export const JoinTransaction = ({ txnDetails }: { txnDetails: TxnDetails }) => {
+export const JoinTransaction = ({
+  txnDetails,
+  isLoading,
+}: {
+  txnDetails: TxnDetails;
+  isLoading: boolean;
+}) => {
   const { userData } = useGlobalUserContext();
   const { joinTransaction } = useTxns();
 
@@ -45,7 +57,11 @@ export const JoinTransaction = ({ txnDetails }: { txnDetails: TxnDetails }) => {
             onClick={joinTransaction}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Join Transaction
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              ' Join Transaction'
+            )}
           </button>
         </div>
       ) : (
@@ -55,7 +71,13 @@ export const JoinTransaction = ({ txnDetails }: { txnDetails: TxnDetails }) => {
   );
 };
 
-export const MakePayment = ({ txnDetails }: { txnDetails: TxnDetails }) => {
+export const MakePayment = ({
+  txnDetails,
+  isLoading,
+}: {
+  txnDetails: TxnDetails;
+  isLoading: boolean;
+}) => {
   const { userData } = useGlobalUserContext();
   const { makePayment } = useTxns();
 
@@ -71,7 +93,11 @@ export const MakePayment = ({ txnDetails }: { txnDetails: TxnDetails }) => {
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Make payment
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              'Make payment'
+            )}
           </button>
         </div>
       ) : (
@@ -84,9 +110,11 @@ export const MakePayment = ({ txnDetails }: { txnDetails: TxnDetails }) => {
 export const DeliverGoods = ({
   txnDetails,
   setIsDeliveryModal,
+  isLoading,
 }: {
   txnDetails: TxnDetails;
   setIsDeliveryModal: Function;
+  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
   return (
@@ -101,7 +129,11 @@ export const DeliverGoods = ({
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Deliver goods/service
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              ' Deliver goods/service'
+            )}
           </button>
         </div>
       ) : (
@@ -114,9 +146,11 @@ export const DeliverGoods = ({
 export const ConfirmDelivery = ({
   txnDetails,
   setIsProductConfirmedModal,
+  isLoading,
 }: {
   txnDetails: TxnDetails;
   setIsProductConfirmedModal: Function;
+  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
 
@@ -132,7 +166,11 @@ export const ConfirmDelivery = ({
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Confirm product delivery
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              'Confirm product delivery'
+            )}
           </button>
         </div>
       ) : (
@@ -173,9 +211,11 @@ export const RequestPaymentBtn = ({
 export const PaymentProcessing = ({
   txnDetails,
   accountNumber,
+  isLoading,
 }: {
   txnDetails: TxnDetails | undefined;
   accountNumber: string;
+  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
   const { collectPayment } = useReqPay();
@@ -190,7 +230,11 @@ export const PaymentProcessing = ({
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-[80%]"
           >
-            Process payment
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              'Process payment'
+            )}
           </button>
         </div>
       ) : (
@@ -202,8 +246,10 @@ export const PaymentProcessing = ({
 
 export const CancelTransaction = ({
   txnDetails,
+  isLoading,
 }: {
   txnDetails: TxnDetails;
+  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
   const { cancelTxn } = useTxns();
@@ -219,7 +265,11 @@ export const CancelTransaction = ({
             }}
             className="px-2 py-4 transition bg-red-500 text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Cancel transaction
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              'Cancel transaction'
+            )}
           </button>
         </div>
       ) : (

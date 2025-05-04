@@ -46,7 +46,7 @@ export type TxnDetails = {
 };
 
 const TxnPageContent = () => {
-  const { txnDetails, fetchTxnDetails, verifyPayment } = useTxns();
+  const { txnDetails, fetchTxnDetails, verifyPayment, isLoading } = useTxns();
 
   const location = useLocation();
   const queryParams = new URLSearchParams(location.search);
@@ -192,28 +192,31 @@ const TxnPageContent = () => {
             <InviteTransactionPartner
               txnDetails={txnDetails}
               setIsInvitationModal={setIsInvitationModal}
+              isLoading={isLoading}
             />
 
             {/* Join transaction conditional */}
-            <JoinTransaction txnDetails={txnDetails} />
+            <JoinTransaction txnDetails={txnDetails} isLoading={isLoading} />
 
             {/* Payment conditional */}
-            <MakePayment txnDetails={txnDetails} />
+            <MakePayment txnDetails={txnDetails} isLoading={isLoading} />
 
             {/* Deliver product conditional */}
             <DeliverGoods
               txnDetails={txnDetails}
               setIsDeliveryModal={setIsDeliveryModal}
+              isLoading={isLoading}
             />
 
             {/* Confirm product delivery */}
             <ConfirmDelivery
               txnDetails={txnDetails}
               setIsProductConfirmedModal={setIsProductConfirmedModal}
+              isLoading={isLoading}
             />
 
             {/* Cancel transaction conditional */}
-            <CancelTransaction txnDetails={txnDetails} />
+            <CancelTransaction txnDetails={txnDetails} isLoading={isLoading} />
 
             {/* Request payment */}
             <RequestPaymentBtn txnDetails={txnDetails} />

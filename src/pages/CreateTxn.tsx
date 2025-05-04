@@ -2,9 +2,11 @@ import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
 import useTxns from '../hooks/useTxns';
 import { CreateTxnDetails } from '../hooks/useTxns';
+import useUIUtil from '../hooks/useUIUtil';
 
 const CreateTxn = () => {
-  const { createTxn } = useTxns();
+  const { isDarkMode } = useUIUtil();
+  const { createTxn, isLoading } = useTxns();
 
   const [txnDetails, setTxnDetails] = useState<CreateTxnDetails>({
     userRole: '',
@@ -43,7 +45,9 @@ const CreateTxn = () => {
           <select
             name="userRole"
             id="userRole"
-            className="shadow border border-gray-200 px-2 py-4 rounded-lg"
+            className={`shadow border border-gray-200 px-2 py-4 rounded-lg ${
+              isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
+            }`}
           >
             <option value="default"> Select user role </option>
             <option value="buyer"> The buyer</option>
@@ -70,7 +74,9 @@ const CreateTxn = () => {
             onChange={handleChange}
             name="txnItemCategory"
             id="txnItemCategory"
-            className="shadow border border-gray-200 px-2 py-4 rounded-lg"
+            className={`shadow border border-gray-200 px-2 py-4 rounded-lg ${
+              isDarkMode ? 'bg-black text-white' : 'bg-white text-black'
+            }`}
           >
             <option value="default"> Select item category </option>
             <option value="personal computer"> Personal computer </option>
@@ -118,7 +124,11 @@ const CreateTxn = () => {
             }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
-            Create transaction
+            {isLoading ? (
+              <span className="loading loading-dots loading-lg"></span>
+            ) : (
+              'Create transaction'
+            )}
           </button>
         </div>
       </section>
