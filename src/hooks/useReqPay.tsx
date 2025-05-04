@@ -11,8 +11,10 @@ import { API } from './useAuth';
 
 const useReqPay = () => {
   const { userToken } = useGlobalUserContext();
-  const dispatch = useDispatch<AppDispatch>();
   const [accountName, setAccountName] = useState('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
 
   const { form } = useSelector((store: RootState) => store.requestPayment);
@@ -60,6 +62,11 @@ const useReqPay = () => {
 
   const collectPayment = async (txnId: string, accountNumber: string) => {
     try {
+      if (isLoading) {
+        return;
+      }
+
+      setIsLoading(true);
       const { account_number, bank_code } = form;
 
       if (
@@ -86,10 +93,12 @@ const useReqPay = () => {
       toast.success(
         'Payment successful, your account will be credited shortly!'
       );
+      setIsLoading(false);
       setTimeout(() => {
         navigate('/');
       }, 1500);
     } catch (error: any) {
+      setIsLoading(false);
       if (error?.response?.data?.msg) {
         toast.error(error?.response?.data?.msg);
       } else {
@@ -103,6 +112,7 @@ const useReqPay = () => {
     resolveAccount,
     accountName,
     collectPayment,
+    isLoading,
   };
 };
 

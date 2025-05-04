@@ -211,14 +211,12 @@ export const RequestPaymentBtn = ({
 export const PaymentProcessing = ({
   txnDetails,
   accountNumber,
-  isLoading,
 }: {
   txnDetails: TxnDetails | undefined;
   accountNumber: string;
-  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
-  const { collectPayment } = useReqPay();
+  const { collectPayment, isLoading } = useReqPay();
   return (
     <div>
       {txnDetails?.seller?.username === userData?.username &&
