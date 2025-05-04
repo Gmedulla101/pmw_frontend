@@ -5,9 +5,12 @@ import { useGlobalUserContext } from '../../context/UserContext';
 import { API } from '../../hooks/useAuth';
 import { useNavigate } from 'react-router';
 import { ToastContainer, toast } from 'react-toastify';
-import close from '../../assets/close.png';
+import closeBlack from '../../assets/close-black.png';
+import closeWhite from '../../assets/close-white.png';
+import useUIUtil from '../../hooks/useUIUtil';
 
 const InvitationModal = ({ closeModal }: { closeModal: any }) => {
+  const { isDarkMode } = useUIUtil();
   const { userToken } = useGlobalUserContext();
   const { id: txnId } = useParams();
   const navigate = useNavigate();
@@ -44,7 +47,7 @@ const InvitationModal = ({ closeModal }: { closeModal: any }) => {
         <section className="bg-white shadow pt-2 pb-5 px-4 rounded-lg z-[101]">
           <div className="flex justify-end">
             <img
-              src={close}
+              src={isDarkMode ? closeWhite : closeBlack}
               alt=""
               onClick={closeModal}
               className="w-10 cursor-pointer rounded-full p-2 hover:bg-gray-200 active:bg-gray-400"

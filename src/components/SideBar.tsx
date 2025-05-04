@@ -1,16 +1,18 @@
 //REACT ROUTER THINGS
 import { Link } from 'react-router';
-
-import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { setIsOpen } from '../redux/features/sidebarSlice';
-import close from '../assets/close.png';
+import closeBlack from '../assets/close-black.png';
+import closeWhite from '../assets/close-white.png';
 import avatar from '../assets/user.png';
 
-//USING DATA FROM THE USER CONTEXT
+//HOOKS
 import { useGlobalUserContext } from '../context/UserContext';
+import { useSelector, useDispatch } from 'react-redux';
+import useUIUtil from '../hooks/useUIUtil';
 
 const SideBar = () => {
+  const { isDarkMode } = useUIUtil();
   const { isOpen } = useSelector((store: RootState) => {
     return store.sidebar;
   });
@@ -22,7 +24,9 @@ const SideBar = () => {
   return (
     <aside
       id="sidebar"
-      className="bg-white h-[100vh] fixed right-0 py-2 px-4 transition-all duration-500 rounded-l-2xl"
+      className={`${
+        isDarkMode ? 'bg-slate-700' : 'white'
+      } h-[100vh] fixed right-0 py-2 px-4 transition-all duration-500 rounded-l-2xl`}
       style={{
         maxWidth: '300px',
         width: isOpen ? '300px' : '0',
@@ -37,9 +41,11 @@ const SideBar = () => {
           onClick={() => {
             dispatch(setIsOpen());
           }}
-          className="w-8 hover:bg-gray-200 rounded-lg cursor-pointer"
+          className={`w-7 p-1 hover:${
+            isDarkMode ? 'bg-gray-500' : 'bg-gray-200'
+          } rounded-lg cursor-pointer`}
         >
-          <img src={close} className="w-full" />
+          <img src={isDarkMode ? closeWhite : closeBlack} className="w-full" />
         </div>
       </div>
 

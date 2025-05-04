@@ -5,11 +5,10 @@ import menuWhite from '../assets/menu-white.png';
 import { setIsOpen } from '../redux/features/sidebarSlice';
 import { useDispatch } from 'react-redux';
 import { AppDispatch } from '../redux/store';
+import useUIUtil from '../hooks/useUIUtil';
 
 const Header = () => {
-  const isDarkMode =
-    window.matchMedia &&
-    window.matchMedia('(prefers-color-scheme: dark)').matches;
+  const { isDarkMode } = useUIUtil();
 
   const dispatch = useDispatch<AppDispatch>();
   return (
