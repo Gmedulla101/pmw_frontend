@@ -90,6 +90,7 @@ const useAuth = () => {
       }, 1500);
     } catch (error: any) {
       setIsLoading(false);
+      console.log(error.response);
       if (error.response.data.msg) {
         toast.error(error?.response?.data?.msg);
       } else {

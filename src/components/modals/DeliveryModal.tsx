@@ -9,7 +9,7 @@ import closeWhite from '../../assets/close-white.png';
 import useUIUtil from '../../hooks/useUIUtil';
 
 const DeliveryModal = ({ closeModal }: { closeModal: any }) => {
-  const {isDarkMode} = useUIUtil();
+  const { isDarkMode } = useUIUtil();
   const { userToken } = useGlobalUserContext();
   const { id: txnId } = useParams();
 
@@ -46,7 +46,11 @@ const DeliveryModal = ({ closeModal }: { closeModal: any }) => {
       <ToastContainer />
       <article className="relative mx-auto w-[90vw] z-[100] flex justify-center top-35">
         {' '}
-        <section className="bg-white shadow pt-2 pb-5 px-4 rounded-lg z-[101]">
+        <section
+          className={`${
+            isDarkMode ? 'bg-slate-700' : 'white'
+          } shadow pt-2 pb-5 px-4 rounded-lg z-[101]`}
+        >
           <div className="flex justify-end">
             <img
               src={isDarkMode ? closeWhite : closeBlack}

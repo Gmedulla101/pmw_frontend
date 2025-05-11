@@ -39,8 +39,9 @@ const useTxns = () => {
       );
 
       toast.success('Transaction created!');
-      setIsLoading(false);
+
       setTimeout(() => {
+        setIsLoading(false);
         navigate(`/transaction/${response.data.transaction.id}`);
       }, 1500);
     } catch (error: any) {

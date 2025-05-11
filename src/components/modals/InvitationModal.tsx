@@ -42,9 +42,13 @@ const InvitationModal = ({ closeModal }: { closeModal: any }) => {
   return (
     <aside className="h-[100vh] w-[100vw] fixed top-0 shadow">
       <ToastContainer />
-      <article className="relative mx-auto w-[90vw] z-[100] flex justify-center top-35">
+      <article className="relative mx-auto w-[90vw] z-[100] flex justify-center top-35 ">
         {' '}
-        <section className="bg-white shadow pt-2 pb-5 px-4 rounded-lg z-[101]">
+        <section
+          className={`${
+            isDarkMode ? 'bg-slate-700' : 'white'
+          } shadow pt-2 pb-5 px-4 rounded-lg z-[101]`}
+        >
           <div className="flex justify-end">
             <img
               src={isDarkMode ? closeWhite : closeBlack}

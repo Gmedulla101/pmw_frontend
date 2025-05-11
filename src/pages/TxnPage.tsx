@@ -1,6 +1,6 @@
 import { useGlobalUserContext } from '../context/UserContext';
 import TxnPageContent from '../components/txnPage/TxnPageContent';
-import SignInModal from '../components/SignInModal';
+import SignInModal from '../components/modals/SignInModal';
 
 const TxnPage = () => {
   const { isSignedIn } = useGlobalUserContext();

@@ -6,12 +6,13 @@ import TxnInfoBox from './TxnInfoBox';
 import MoneyFlowBox from './MoneyFlowBox';
 import create from '../../assets/plus.png';
 import join from '../../assets/partnership.png';
+import LoaderComponent from '../LoaderComponent';
 
 import TxnTable from './TxnTable';
 import useFetchHomeData from '../../hooks/useFetchHomeData';
 
 const SignedInHome = () => {
-  const { tableData, fetchData } = useFetchHomeData();
+  const { tableData, fetchData, isLoading } = useFetchHomeData();
   const location = useLocation();
 
   useEffect(() => {
@@ -63,7 +64,7 @@ const SignedInHome = () => {
               </p>
             </div>
           )}
-          <TxnTable tableData={tableData} />
+          {isLoading ? <LoaderComponent /> : <TxnTable tableData={tableData} />}
         </section>
       </main>
     </>
