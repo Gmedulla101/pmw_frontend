@@ -83,7 +83,12 @@ const JoinTxn = () => {
               <p> Escrow fee:</p>
               <p>#{(txnDetails.txnItemValue * 0.02).toLocaleString()}</p>
             </div>{' '}
-            <div onClick={joinTransaction} className="flex justify-center mt-5">
+            <div
+              onClick={() => {
+                joinTransaction(txnDetails.id);
+              }}
+              className="flex justify-center mt-5"
+            >
               <button className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
                 Join transaction
               </button>

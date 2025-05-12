@@ -144,7 +144,7 @@ const useTxns = () => {
   };
 
   //FUNCTIONALITY FOR MAKING PAYMENTS
-  const makePayment = async (txnId: string | undefined) => {
+  const makePayment = async (txnId: string) => {
     try {
       if (isLoading) {
         return;
