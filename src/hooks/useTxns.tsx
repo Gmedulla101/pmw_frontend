@@ -110,14 +110,16 @@ const useTxns = () => {
   };
 
   //FUNCTIONALITY TO JOIN A TRANSACTION
-  const joinTransaction = async () => {
+  const joinTransaction = async (txnId: string) => {
     try {
+      console.log(isLoading);
       if (isLoading) {
         return;
       }
       setIsLoading(true);
+
       await axios.patch(
-        `${API}/txn/join-transaction/${txnDetails?.id}`,
+        `${API}/txn/join-transaction/${txnId}`,
         {},
         {
           headers: {
@@ -126,9 +128,10 @@ const useTxns = () => {
         }
       );
       toast.success("You've joined the transaction!");
-      setIsLoading(false);
       setTimeout(() => {
-        navigate(`/transaction/${txnDetails?.id}`);
+        setIsLoading(false);
+
+        navigate(`/transaction/${txnId}`);
       }, 1500);
     } catch (error: any) {
       setIsLoading(false);

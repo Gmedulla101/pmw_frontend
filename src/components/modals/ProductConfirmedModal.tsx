@@ -14,9 +14,11 @@ const ProductConfirmedModal = ({ closeModal }: { closeModal: any }) => {
   const { id: txnId } = useParams();
 
   const [checked, setChecked] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const confirmDelivery = async () => {
     try {
+      setIsLoading(true);
       if (!checked) {
         toast.error('Confirm that you have read the instructions and warnings');
         return;
@@ -34,8 +36,9 @@ const ProductConfirmedModal = ({ closeModal }: { closeModal: any }) => {
       toast.success('Delivery confirmed!');
 
       setTimeout(() => {
+        setIsLoading(false);
         window.location.href = `/transaction/${txnId}`;
-      }, 1500);
+      }, 1000);
     } catch (error) {
       console.log(error);
     }
@@ -89,12 +92,23 @@ const ProductConfirmedModal = ({ closeModal }: { closeModal: any }) => {
           </div>
 
           <div className="flex justify-center mt-5">
-            <button
-              onClick={confirmDelivery}
-              className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-            >
-              Finish
-            </button>
+            {isLoading ? (
+              <button
+                onClick={() => {
+                  console.log('Loading...');
+                }}
+                className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+              >
+                <span className="loading loading-dots loading-lg"></span>
+              </button>
+            ) : (
+              <button
+                onClick={confirmDelivery}
+                className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+              >
+                Finish
+              </button>
+            )}
           </div>
         </section>
       </article>

@@ -38,15 +38,9 @@ export const InviteTransactionPartner = ({
   );
 };
 
-export const JoinTransaction = ({
-  txnDetails,
-  isLoading,
-}: {
-  txnDetails: TxnDetails;
-  isLoading: boolean;
-}) => {
+export const JoinTransaction = ({ txnDetails }: { txnDetails: TxnDetails }) => {
   const { userData } = useGlobalUserContext();
-  const { joinTransaction } = useTxns();
+  const { joinTransaction, isLoading } = useTxns();
 
   return (
     <div>
@@ -54,7 +48,9 @@ export const JoinTransaction = ({
       txnDetails.buyer?.username !== userData.username ? (
         <div className="flex justify-center mt-5">
           <button
-            onClick={joinTransaction}
+            onClick={() => {
+              joinTransaction(txnDetails.id);
+            }}
             className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
           >
             {isLoading ? (
@@ -73,13 +69,12 @@ export const JoinTransaction = ({
 
 export const MakePayment = ({
   txnDetails,
-  isLoading,
+
 }: {
   txnDetails: TxnDetails;
-  isLoading: boolean;
 }) => {
   const { userData } = useGlobalUserContext();
-  const { makePayment } = useTxns();
+  const { makePayment, isLoading } = useTxns();
 
   return (
     <div>

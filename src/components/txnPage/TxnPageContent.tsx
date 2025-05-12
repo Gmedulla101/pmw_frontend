@@ -169,15 +169,6 @@ const TxnPageContent = () => {
           <section className="mb-12">
             {/* PARAGRAPHS */}
 
-            {txnDetails.cashConfirmed && !txnDetails.productDelivered ? (
-              <p className="mt-5">
-                {' '}
-                Payment has been made, waiting for product delivery!{' '}
-              </p>
-            ) : (
-              <p className="mt-5"> The product has been delivered! </p>
-            )}
-
             {txnDetails.productConfirmed ? (
               <p className="mt-5">
                 {' '}
@@ -196,10 +187,10 @@ const TxnPageContent = () => {
             />
 
             {/* Join transaction conditional */}
-            <JoinTransaction txnDetails={txnDetails} isLoading={isLoading} />
+            <JoinTransaction txnDetails={txnDetails} />
 
             {/* Payment conditional */}
-            <MakePayment txnDetails={txnDetails} isLoading={isLoading} />
+            <MakePayment txnDetails={txnDetails} />
 
             {/* Deliver product conditional */}
             <DeliverGoods

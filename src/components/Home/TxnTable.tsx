@@ -69,7 +69,7 @@ const TxnTable = ({ tableData }: { tableData: TableData[] }) => {
                             : ''}
                         </span>
                       </td>
-                      <td className="w-full text-center flex items-center gap-1">
+                      <td className="w-full text-center flex items-center gap-1 justify-center">
                         {' '}
                         {data.status === 'pending' ? (
                           <img className="w-2" src={yellowBtn} />

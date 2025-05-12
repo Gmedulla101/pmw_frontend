@@ -16,9 +16,11 @@ const InvitationModal = ({ closeModal }: { closeModal: any }) => {
   const navigate = useNavigate();
 
   const [email, setEmail] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const sendInvite = async () => {
     try {
+      setIsLoading(true);
       await axios.post(
         `${API}/txn/transaction-invite/${txnId}`,
         { invitationSent: true, email },
@@ -32,10 +34,17 @@ const InvitationModal = ({ closeModal }: { closeModal: any }) => {
       toast.success('Invitation sent!');
 
       setTimeout(() => {
+        setIsLoading(false);
         navigate(`/`);
       }, 1500);
-    } catch (error) {
+    } catch (error: any) {
+      setIsLoading(false);
       console.log(error);
+      if (error?.response?.data?.msg) {
+        toast.error(error?.response?.data?.msg);
+      } else {
+        toast.error(error.message);
+      }
     }
   };
 
@@ -93,12 +102,23 @@ const InvitationModal = ({ closeModal }: { closeModal: any }) => {
           </p>
 
           <div className="flex justify-center mt-5">
-            <button
-              onClick={sendInvite}
-              className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-            >
-              Finish
-            </button>
+            {isLoading ? (
+              <button
+                onClick={() => {
+                  console.log('Loading...');
+                }}
+                className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+              >
+                <span className="loading loading-dots loading-lg"></span>
+              </button>
+            ) : (
+              <button
+                onClick={sendInvite}
+                className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+              >
+                Finish
+              </button>
+            )}
           </div>
         </section>
       </article>
