@@ -9,7 +9,7 @@ import useTxns from '../hooks/useTxns';
 const JoinTxn = () => {
   const [id, setId] = useState<string>('');
 
-  const { fetchTxnDetails, txnDetails, joinTransaction } = useTxns();
+  const { fetchTxnDetails, txnDetails, joinTransaction, isLoading } = useTxns();
 
   return (
     <main className="px-5 md:px-10 mt-8">
@@ -34,21 +34,32 @@ const JoinTxn = () => {
             value={id}
           />
           <div className="flex justify-center">
-            <button
-              onClick={() => {
-                fetchTxnDetails(id);
-              }}
-              className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
-            >
-              Search
-            </button>
+            {isLoading ? (
+              <button
+                onClick={() => {
+                  console.log('Loading...');
+                }}
+                className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+              >
+                <span className="loading loading-dots loading-lg"></span>
+              </button>
+            ) : (
+              <button
+                onClick={() => {
+                  fetchTxnDetails(id);
+                }}
+                className="p-2 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72"
+              >
+                Search
+              </button>
+            )}
           </div>
         </div>
       </section>
 
       <aside className="mt-8 pb-8">
         {!txnDetails ? (
-          <LoaderComponent />
+          ''
         ) : (
           <section className="border border-gray-200 p-4 rounded-lg mt-5">
             <h1 className="font-bold text-2xl mb-2"> Item/Service details </h1>
