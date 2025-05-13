@@ -1,6 +1,3 @@
-//IMPORTING HELPER COMPONENTS
-import LoaderComponent from '../components/LoaderComponent';
-
 //IMPORTING DEPS AND HOOKS
 import { useState } from 'react';
 import { ToastContainer } from 'react-toastify';
