@@ -25,7 +25,7 @@ const SideBar = () => {
     <aside
       id="sidebar"
       className={`${
-        isDarkMode ? 'bg-slate-700' : 'white'
+        isDarkMode ? 'bg-slate-700' : 'bg-white'
       } h-[100vh] fixed right-0 py-2 px-4 transition-all duration-500 rounded-l-2xl`}
       style={{
         maxWidth: '300px',

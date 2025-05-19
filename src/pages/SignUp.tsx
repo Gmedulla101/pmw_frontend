@@ -1,3 +1,5 @@
+import { Link } from 'react-router';
+
 //REDUX TOLLKIT THINGS
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
@@ -94,6 +96,19 @@ const SignUp = () => {
         <p className="text-xs text-red-600">
           Please note that passwords are case sentitive
         </p>
+
+        <div>
+          <p className="text-xs font-semibold">
+            {' '}
+            Already have an account?{' '}
+            <Link to={'/sign-in'}>
+              {' '}
+              <span className="bg-black text-white rounded-lg px-2 inline-block transition hover:scale-105 cursor-pointer">
+                Click here
+              </span>
+            </Link>{' '}
+          </p>
+        </div>
 
         <button
           onClick={handleRegister}
