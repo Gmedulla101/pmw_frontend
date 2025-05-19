@@ -11,26 +11,25 @@ const DefaultHome = () => {
       <main className="px-5 md:px-10 lg:px-20">
         <section className="flex flex-col items-center gap-5 md:flex-row-reverse md:justify-between">
           <div className="w-[75%] md:w-full">
-            <img
-              src={hero}
-              alt="Payway hero image"
-              className="grayscale w-full"
-            />
+            <img src={hero} alt="Payway hero image" className="w-full" />
           </div>
 
           <div className="w-full">
-            <h1 className="font-bold text-3xl text-center md:text-left md:text-6xl">
+            <h1 className="font-bold text-3xl text-center md:text-6xl">
               {' '}
               Welcome to PayWay{' '}
             </h1>
-            <p className="font-bold text-xl my-5 text-center md:text-left">
+            <p className="font-bold text-xl my-5 text-center ">
               Buy with confidence, sell with credibility
             </p>
             <div className="flex justify-center">
-              <button className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+              <Link to={'/sign-up'}>
                 {' '}
-                Get started{' '}
-              </button>
+                <button className="px-2 py-4 transition bg-black text-white font-semibold rounded-lg hover:scale-105 cursor-pointer w-72">
+                  {' '}
+                  Get started{' '}
+                </button>
+              </Link>
             </div>
           </div>
         </section>
