@@ -51,6 +51,17 @@ const SignIn = () => {
           onChange={handleFormChange}
         />
 
+        <button
+          onClick={handleLogin}
+          id="signup"
+          className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-8"
+        >
+          {isLoading ? (
+            <span className="loading loading-dots loading-lg"></span>
+          ) : (
+            <p>Log in</p>
+          )}
+        </button>
         <div>
           <p className="text-xs font-semibold">
             {' '}
@@ -63,18 +74,6 @@ const SignIn = () => {
             </Link>{' '}
           </p>
         </div>
-
-        <button
-          onClick={handleLogin}
-          id="signup"
-          className="button bg-black text-white font-semibold py-2 px-6 rounded-lg cursor-pointer mt-8"
-        >
-          {isLoading ? (
-            <span className="loading loading-dots loading-lg"></span>
-          ) : (
-            <p>Log in</p>
-          )}
-        </button>
       </section>
     </main>
   );
