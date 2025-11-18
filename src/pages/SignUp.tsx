@@ -1,4 +1,6 @@
+//IMPORTING HELPER COMPONENTS
 import { Link } from 'react-router';
+import Input from '../components/input';
 
 //REDUX TOLLKIT THINGS
 import { useSelector, useDispatch } from 'react-redux';
@@ -38,57 +40,50 @@ const SignUp = () => {
       </div>
 
       <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl mx-auto px-5 md:px-10 md:w-[80%] lg:w-[50%]">
-        <input
+        <Input
           type="text"
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="firstName"
-          placeholder="Enter your first name"
+          placeHolder="Enter your first name"
           value={form.firstName}
           onChange={handleFormChange}
         />
 
-        <input
+        <Input
           type="text"
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="lastName"
-          placeholder="Enter your last name"
+          placeHolder="Enter your last name"
           value={form.lastName}
           onChange={handleFormChange}
         />
 
-        <input
+        <Input
           type="text"
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="username"
-          placeholder="Enter your username"
+          placeHolder="Enter your username"
           value={form.username}
           onChange={handleFormChange}
         />
 
-        <input
+        <Input
           type="email"
-          required={true}
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="email"
-          placeholder="Enter your email"
+          placeHolder="Enter your email"
           value={form.email}
           onChange={handleFormChange}
         />
 
-        <input
+        <Input
           type="password"
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="password"
-          placeholder="Enter your password"
+          placeHolder="Enter your password"
           value={form.password}
           onChange={handleFormChange}
         />
 
-        <input
+        <Input
           type="password"
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="confirmPassword"
-          placeholder="Re-enter your password"
+          placeHolder="Re-enter your password"
           value={form.confirmPassword}
           onChange={handleFormChange}
         />

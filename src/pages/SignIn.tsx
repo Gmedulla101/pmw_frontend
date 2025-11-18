@@ -1,9 +1,13 @@
+//IMPORTING HOOKS
 import { useSelector, useDispatch } from 'react-redux';
 import { RootState, AppDispatch } from '../redux/store';
 import { handleForm } from '../redux/features/authSlice';
 import useAuth from '../hooks/useAuth';
 import { ToastContainer } from 'react-toastify';
+
+//IMPORTING HELPER COMPONENTS
 import { Link } from 'react-router';
+import Input from '../components/input';
 
 const SignIn = () => {
   const { form } = useSelector((store: RootState) => store.auth);
@@ -32,21 +36,18 @@ const SignIn = () => {
       </div>
 
       <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl mx-auto px-5 md:px-10 md:w-[80%] lg:w-[50%]">
-        <input
+        <Input
           type="email"
-          required={true}
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="email"
-          placeholder="Enter your email"
+          placeHolder="Enter your email"
           value={form.email}
           onChange={handleFormChange}
         />
 
-        <input
+        <Input
           type="password"
-          className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
           name="password"
-          placeholder="Enter your password"
+          placeHolder="Enter your password"
           value={form.password}
           onChange={handleFormChange}
         />
