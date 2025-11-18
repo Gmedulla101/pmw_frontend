@@ -11,7 +11,7 @@ const useUIUtil = () => {
     setIsDarkMode(darkModeState);
   }, [darkModeState]);
 
-  https: return {
+  return {
     isDarkMode,
   };
 };
