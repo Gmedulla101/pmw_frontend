@@ -31,7 +31,7 @@ const SignIn = () => {
         <ToastContainer autoClose={2000} />
       </div>
 
-      <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl px-5 md:px-10">
+      <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl mx-auto px-5 md:px-10 md:w-[80%] lg:w-[50%]">
         <input
           type="email"
           required={true}

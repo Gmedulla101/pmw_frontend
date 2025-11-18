@@ -37,7 +37,7 @@ const SignUp = () => {
         <ToastContainer autoClose={2000} />
       </div>
 
-      <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl px-5 md:px-10">
+      <section className="flex flex-col gap-3.5 py-6 rounded-t-3xl mx-auto px-5 md:px-10 md:w-[80%] lg:w-[50%]">
         <input
           type="text"
           className="border border-black rounded-lg py-2 px-4 outline-none focus:border-2 focus:border-gray-700"
