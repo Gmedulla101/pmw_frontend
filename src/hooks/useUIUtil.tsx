@@ -1,9 +1,20 @@
+import { useState, useEffect } from 'react';
+
 const useUIUtil = () => {
-  const isDarkMode =
+  const darkModeState =
     window.matchMedia &&
     window.matchMedia('(prefers-color-scheme: dark)').matches;
 
-  return {
+  const [isDarkMode, setIsDarkMode] = useState<boolean>(darkModeState);
+
+  useEffect(() => {
+    setIsDarkMode(darkModeState);
+  }, [darkModeState]);
+
+  console.log(darkModeState, isDarkMode);
+
+ 
+  https: return {
     isDarkMode,
   };
 };

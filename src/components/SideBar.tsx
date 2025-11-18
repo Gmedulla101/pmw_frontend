@@ -1,7 +1,9 @@
 //REACT ROUTER THINGS
-import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 import { RootState, AppDispatch } from '../redux/store';
 import { setIsOpen } from '../redux/features/sidebarSlice';
+
+//IMPORTING COMPONENT IMAGE ASSETS
 import closeBlack from '../assets/close-black.png';
 import closeWhite from '../assets/close-white.png';
 import avatar from '../assets/user.png';
@@ -18,6 +20,7 @@ const SideBar = () => {
   });
 
   const dispatch = useDispatch<AppDispatch>();
+  const navigate = useNavigate();
 
   const { isSignedIn } = useGlobalUserContext();
 
@@ -34,9 +37,13 @@ const SideBar = () => {
       }}
     >
       <div className="flex justify-between items-center">
-        <span className="block w-12 h-12 border-3 border-gray-400 rounded-full overflow-hidden">
-          <img className="mt-1" src={avatar} />
-        </span>
+        {isSignedIn ? (
+          <span className="block w-12 h-12 border-3 border-gray-400 rounded-full overflow-hidden">
+            <img className="mt-1" src={avatar} />
+          </span>
+        ) : (
+          <div></div>
+        )}
         <div
           onClick={() => {
             dispatch(setIsOpen());
@@ -53,23 +60,57 @@ const SideBar = () => {
       <div className="mt-10">
         {isSignedIn ? (
           <ul className="flex flex-col gap-4 text-[14px] font-semibold">
-            <Link to={'/user-profile'}>
-              <li> Profile </li>
-            </Link>
-            <li> Transactions </li>
-            <li> Messages </li>
-            <li> Request history </li>
-            <li> Support </li>
+            <li
+              className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition"
+              onClick={() => {
+                navigate('/user-profile');
+                dispatch(setIsOpen());
+              }}
+            >
+              Profile
+            </li>
+
+            <li className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition">
+              Transactions
+            </li>
+            <li className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition">
+              Messages
+            </li>
+            <li className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition">
+              Request history
+            </li>
+            <li className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition">
+              Support
+            </li>
           </ul>
         ) : (
           <ul className="flex flex-col gap-4 text-[14px] font-semibold">
-            <Link to={'/sign-up'}>
-              <li> Sign up </li>
-            </Link>
-            <Link to={'/sign-in'}>
-              <li> Sign in </li>
-            </Link>
-            <li> Support </li>
+            <li
+              className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition"
+              onClick={() => {
+                navigate('/sign-up');
+                dispatch(setIsOpen());
+              }}
+            >
+              {' '}
+              Sign up{' '}
+            </li>
+
+            <li
+              className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition"
+              onClick={() => {
+                navigate('/sign-in');
+                dispatch(setIsOpen());
+              }}
+            >
+              {' '}
+              Sign in{' '}
+            </li>
+
+            <li className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition">
+              {' '}
+              Support{' '}
+            </li>
           </ul>
         )}
       </div>
