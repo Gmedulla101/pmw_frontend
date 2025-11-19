@@ -63,6 +63,16 @@ const SideBar = () => {
             <li
               className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition"
               onClick={() => {
+                navigate('/');
+                dispatch(setIsOpen());
+              }}
+            >
+              Dashboard
+            </li>
+
+            <li
+              className="cursor-pointer hover:bg-slate-800 p-2 rounded-lg transition"
+              onClick={() => {
                 navigate('/user-profile');
                 dispatch(setIsOpen());
               }}
